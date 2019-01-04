@@ -3,7 +3,7 @@ import keras.backend as K
 
 
 # define a layer in keras fashion.
-class spp(Layer):
+class SPP(Layer):
     """
     Spatial Pyramid Pooling Layer, referred to as SPP.
 
@@ -29,10 +29,10 @@ class spp(Layer):
     """
 
     def __init__(self,pool_list,**kwargs):
-        super(spp, self).__init__(**kwargs)
+        super(SPP, self).__init__(**kwargs)
         self.pool_list=pool_list
         self.num_outputs_per_channel=sum([i*i for i in pool_list])
-        super(spp, self).__init__(**kwargs)
+        super(SPP, self).__init__(**kwargs)
 
     # Build is used to define weights, trainable weights should be added here.
     def build(self, input_shape):
@@ -86,5 +86,5 @@ class spp(Layer):
     # Process parameters.
     def get_config(self):
         config = {"pool_list":self.pool_list}
-        base_config = super(spp, self).get_config()
-        return dict(list(base_config.items())+list(config.items()))
+        base_config = super(SPP, self).get_config()
+        return dict(list(base_config.items()) + list(config.items()))
