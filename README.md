@@ -1,4 +1,5 @@
 # DNN
-This is a DNN Learning project of Xu Ma.
+This is a DNN Learning project from Xu Ma, Computer Science, Univerisity of North Texas.
+
 
 
