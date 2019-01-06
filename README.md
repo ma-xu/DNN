@@ -5,6 +5,11 @@ This is a DNN Learning project from Xu Ma, Computer Science, Univerisity of Nort
 
 [TOC]
 
+# VGG16
+# SPPNET
+# RESNET
+
+
 ### 已经包括
 
 - VGG16
