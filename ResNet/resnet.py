@@ -4,6 +4,7 @@ Author: Xu Ma.
 Date: Jan/5/2019
 Paper:  "Deep Residual Learning for Image Recognition", Kaiming He.
 Remark: Solving the problem of 'degradation', which means more layers incurs more errors.
+Refer to : https://github.com/raghakot/keras-resnet
 """
 import six
 from keras.models import Model
@@ -219,56 +220,56 @@ class ResNetBuilder(object):
         if len(input_shape)!=3:
             raise Exception("Input shape should be a tuple (nb_channels, nb_rows, nb_cols)")
 
-            # Permute dimension order if necessary
-            if K.image_dim_ordering() == 'tf':
-                input_shape = (input_shape[1], input_shape[2], input_shape[0])
+        # Permute dimension order if necessary
+        if K.image_dim_ordering() == 'tf':
+            input_shape = (input_shape[1], input_shape[2], input_shape[0])
 
-            # Load function from str if needed.
-            block_fn = _get_block(block_fn)
+        # Load function from str if needed.
+        block_fn = _get_block(block_fn)
 
-            input = Input(shape=input_shape)
-            conv1 = _conv_bn_relu(filters=64, kernel_size=(7, 7), strides=(2, 2))(input)
-            pool1 = MaxPooling2D(pool_size=(3, 3), strides=(2, 2), padding="same")(conv1)
+        input = Input(shape=input_shape)
+        conv1 = _conv_bn_relu(filters=64, kernel_size=(7, 7), strides=(2, 2))(input)
+        pool1 = MaxPooling2D(pool_size=(3, 3), strides=(2, 2), padding="same")(conv1)
 
-            block = pool1
-            filters = 64
-            for i, r in enumerate(repetitions):
-                block = _residual_block(block_fn, filters=filters, repetitions=r, is_first_layer=(i == 0))(block)
-                filters *= 2
+        block = pool1
+        filters = 64
+        for i, r in enumerate(repetations):
+            block = _residual_block(block_fn, filters=filters, repetitions=r, is_first_layer=(i == 0))(block)
+            filters *= 2
 
-            # Last activation
-            block = _bn_relu(block)
+        # Last activation
+        block = _bn_relu(block)
 
-            # Classifier block
-            block_shape = K.int_shape(block)
-            pool2 = AveragePooling2D(pool_size=(block_shape[ROW_AXIS], block_shape[COL_AXIS]),
-                                     strides=(1, 1))(block)
-            flatten1 = Flatten()(pool2)
-            dense = Dense(units=num_outputs, kernel_initializer="he_normal",
-                          activation="softmax")(flatten1)
+        # Classifier block
+        block_shape = K.int_shape(block)
+        pool2 = AveragePooling2D(pool_size=(block_shape[ROW_AXIS], block_shape[COL_AXIS]),
+                                 strides=(1, 1))(block)
+        flatten1 = Flatten()(pool2)
+        dense = Dense(units=num_outputs, kernel_initializer="he_normal",
+                      activation="softmax")(flatten1)
 
-            model = Model(inputs=input, outputs=dense)
-            return model
+        model = Model(inputs=input, outputs=dense)
+        return model
 
-        @staticmethod
-        def build_resnet_18(input_shape, num_outputs):
-            return ResNetBuilder.build(input_shape, num_outputs, basic_block, [2, 2, 2, 2])
+    @staticmethod
+    def build_resnet_18(input_shape, num_outputs):
+        return ResNetBuilder.build(input_shape, num_outputs, _basic_block, [2, 2, 2, 2])
 
-        @staticmethod
-        def build_resnet_34(input_shape, num_outputs):
-            return ResNetBuilder.build(input_shape, num_outputs, basic_block, [3, 4, 6, 3])
+    @staticmethod
+    def build_resnet_34(input_shape, num_outputs):
+        return ResNetBuilder.build(input_shape, num_outputs, _basic_block, [3, 4, 6, 3])
 
-        @staticmethod
-        def build_resnet_50(input_shape, num_outputs):
-            return ResNetBuilder.build(input_shape, num_outputs, bottleneck, [3, 4, 6, 3])
+    @staticmethod
+    def build_resnet_50(input_shape, num_outputs):
+        return ResNetBuilder.build(input_shape, num_outputs, _basic_block, [3, 4, 6, 3])
 
-        @staticmethod
-        def build_resnet_101(input_shape, num_outputs):
-            return ResNetBuilder.build(input_shape, num_outputs, bottleneck, [3, 4, 23, 3])
+    @staticmethod
+    def build_resnet_101(input_shape, num_outputs):
+        return ResNetBuilder.build(input_shape, num_outputs, _basic_block, [3, 4, 23, 3])
 
-        @staticmethod
-        def build_resnet_152(input_shape, num_outputs):
-            return ResNetBuilder.build(input_shape, num_outputs, bottleneck, [3, 8, 36, 3])
+    @staticmethod
+    def build_resnet_152(input_shape, num_outputs):
+        return ResNetBuilder.build(input_shape, num_outputs, _basic_block, [3, 8, 36, 3])
 
 
 
