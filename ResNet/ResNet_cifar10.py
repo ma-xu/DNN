@@ -41,7 +41,7 @@ X_test =X_test - mean_image
 X_train/=128.
 X_test/=128.
 
-model = resnet.ResNetBuilder.build_resnet_18((image_channels,image_rows,image_cols),nb_classes)
+model = resnet.ResNetBuilder.build_resnet_18((image_channels, image_rows, image_cols), nb_classes)
 model.compile(loss='categorical_crossentropy',optimizer='adam',metrics=['accuracy'])
 
 # Use tensorboard
