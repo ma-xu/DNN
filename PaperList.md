@@ -1,5 +1,5 @@
 # CV Paper List
-This is a list for state-of-art computer version papers.<br>
+It's a list for state-of-art computer version papers that I have read.<br>
 Collected by Xu Ma.  <xuma@my.unt.edu>
 
 
