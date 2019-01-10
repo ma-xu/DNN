@@ -25,7 +25,7 @@ Collected by Xu Ma.  <xuma@my.unt.edu>
  <br>You Only Look Once: Unified, Real-Time Object Detection
 + [YOLO V2, YOLO9000](https://arxiv.org/pdf/1612.08242.pdf) Joseph Redmon
 <br>YOLO9000: Better, Faster, Stronger
-+ [YOLO V3](https://arxiv.org/pdf/1804.02767.pdf)Joseph Redmon
++ [YOLO V3](https://arxiv.org/pdf/1804.02767.pdf) Joseph Redmon
 <br>YOLOv3: An Incremental Improvement
 
 ## Layers
