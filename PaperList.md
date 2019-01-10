@@ -4,8 +4,8 @@ Collected by Xu Ma.  <xuma@my.unt.edu>
 
 
 ## Classification
- + [VGG16](https://arxiv.org/pdf/1409.1556.pdf "VGG16") <small>Andrew</small>
-	<small>VERY DEEP CONVOLUTIONAL NETWORKS FOR LARGE-SCALE IMAGE RECOGNITION</small>
+ + [VGG16](https://arxiv.org/pdf/1409.1556.pdf "VGG16") Andrew
+	VERY DEEP CONVOLUTIONAL NETWORKS FOR LARGE-SCALE IMAGE RECOGNITION
 	
  + [ResNet](https://arxiv.org/pdf/1512.03385.pdf) <small>Kaiming He</small>
  <small>Deep Residual Learning for Image Recognition</small>
