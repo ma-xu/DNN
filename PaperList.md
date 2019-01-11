@@ -4,6 +4,8 @@ Collected by Xu Ma.  <xuma@my.unt.edu>
 
 
 ## Classification
+ + [5LayerCNN](https://papers.nips.cc/paper/4824-imagenet-classification-with-deep-convolutional-neural-networks.pdf) Hinton
+	<br>ImageNet Classification with Deep Convolutional Neural Networks
  + [VGG16](https://arxiv.org/pdf/1409.1556.pdf "VGG16") Andrew
 	<br>VERY DEEP CONVOLUTIONAL NETWORKS FOR LARGE-SCALE IMAGE RECOGNITION
 	
