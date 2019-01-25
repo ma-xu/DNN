@@ -10,7 +10,7 @@ Collected by Xu Ma.  <xuma@my.unt.edu>
 	<br>VERY DEEP CONVOLUTIONAL NETWORKS FOR LARGE-SCALE IMAGE RECOGNITION
  + [ResNet](https://arxiv.org/pdf/1512.03385.pdf) Kaiming He
 	<br>Deep Residual Learning for Image Recognition
- + [Identity ResNet] (https://arxiv.org/pdf/1603.05027.pdf) Kaiming He
+ + [Identity ResNet](https://arxiv.org/pdf/1603.05027.pdf) Kaiming He
  	<br>Identity Mappings in Deep Residual Networks
  + [ResNet-Ensembles](https://arxiv.org/pdf/1605.06431.pdf) Cornell
  	<br>Residual Networks Behave Like Ensembles of Relatively Shallow Networks
