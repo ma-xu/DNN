@@ -16,6 +16,9 @@ Collected by Xu Ma.  <xuma@my.unt.edu>
  	<br>Residual Networks Behave Like Ensembles of Relatively Shallow Networks
  + [DesNet](https://arxiv.org/pdf/1608.06993.pdf) Tinghua, Cornell, FAIR
  	<br>Densely Connected Convolutional Networks
+
+ + [Network in Network](https://arxiv.org/pdf/1312.4400.pdf) 2014 ICLR National University of Singapore
+ 	<br >Network in Network
  
  
 ## Object Detection
