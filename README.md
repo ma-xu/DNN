@@ -10,4 +10,5 @@ Some details in DNN will be presented here: [details](https://github.com/1395252
 ## RESNET
 ## YOLO_V1
 ## R-CNN
+## DenseNet
 
