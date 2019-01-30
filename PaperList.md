@@ -14,7 +14,7 @@ Collected by Xu Ma.  <xuma@my.unt.edu>
  	<br>Identity Mappings in Deep Residual Networks
  + [ResNet-Ensembles](https://arxiv.org/pdf/1605.06431.pdf) Cornell
  	<br>Residual Networks Behave Like Ensembles of Relatively Shallow Networks
- + [DesNet](https://arxiv.org/pdf/1608.06993.pdf) Tinghua, Cornell, FAIR
+ + [DesenNet](https://arxiv.org/pdf/1608.06993.pdf) Tinghua, Cornell, FAIR
  	<br>Densely Connected Convolutional Networks
 
  + [Network in Network](https://arxiv.org/pdf/1312.4400.pdf) 2014 ICLR National University of Singapore
