@@ -41,6 +41,9 @@ Collected by Xu Ma.  <xuma@my.unt.edu>
 + [YOLO V3](https://arxiv.org/pdf/1804.02767.pdf) Joseph Redmon
 <br>YOLOv3: An Incremental Improvement
 
++ [GlobalAveragePooling for Localization](https://www.cv-foundation.org/openaccess/content_cvpr_2016/papers/Zhou_Learning_Deep_Features_CVPR_2016_paper.pdf) Bolei zhou, MIT,CVPR2016
+<br> Learning Deep Features for Discriminative Localization
+
 ## Layers
 + [SPPnet](https://arxiv.org/pdf/1406.4729.pdf) Kaiming He
 <br>Spatial Pyramid Pooling in Deep Convolutional Networks for Visual Recognition
