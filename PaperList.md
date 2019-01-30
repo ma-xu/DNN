@@ -19,6 +19,10 @@ Collected by Xu Ma.  <xuma@my.unt.edu>
 
  + [Network in Network](https://arxiv.org/pdf/1312.4400.pdf) 2014 ICLR National University of Singapore
  	<br >Network in Network
+	
+ + [HighwayNet](https://arxiv.org/pdf/1507.06228.pdf) 2015 Swiss Srivastava
+ 	<br> Highway Network
+	
  
  
 ## Object Detection
