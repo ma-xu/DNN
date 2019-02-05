@@ -1,3 +1,7 @@
+"""
+refer to https://github.com/tdeboissiere/DeepLearningImplementations/tree/master/DenseNet
+This is design for cifar10 dataset.
+"""
 from keras.models import Model
 from keras.layers.core import Dense,Dropout,Activation
 from keras.layers.convolutional import Conv2D
