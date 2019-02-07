@@ -11,7 +11,7 @@ The question can be understood from  the following perspective:<br>
 However, having too many filters for a single concept imposes extra burden on the next layer, which needs to consider all combinations of variations from the previous layer [Piecewise linear multilayer perceptrons and dropout]. As in CNN, filters from higher layers map to larger regions in the original input. It generates a higher level concept by combining the lower level concepts from the layer below.<br>
 presented in [Network in Network, page 2.]<br>
 
-+ Why two 3X3 kernel can replace one 5X5 kernel?<br>
++ <font color=Chocolate size=72>Why two 3X3 kernel can replace one 5X5 kernel?</font><br>
 The receptive field is the same.
 
 + Less parameters usually means less overfitting. 
