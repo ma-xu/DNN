@@ -1,18 +1,25 @@
 # Details in DNN
 
 + __Global average pooling__<br>
+```
 presented in "Network in Network". Less parameters. Using GlobalAveragePooling replace FC.
 Also, another potential advantage is that FC will destory spatial information, may be not important for classification, but actually important for localization.(refer to "Learning Deep Features for Discriminative Localization", CVPR2016, MIT)
+```
 <br>
 
 + __Why pooling, step size greater than 1, filters increase?__<br>
+```
 (Namely, feature maps size decrease, filters number increase)<br>
 The question can be understood from  the following perspective:<br>
 However, having too many filters for a single concept imposes extra burden on the next layer, which needs to consider all combinations of variations from the previous layer [Piecewise linear multilayer perceptrons and dropout]. As in CNN, filters from higher layers map to larger regions in the original input. It generates a higher level concept by combining the lower level concepts from the layer below.<br>
-presented in [Network in Network, page 2.]<br>
+presented in [Network in Network, page 2.]
+```
+<br>
 
 + __Why two 3X3 kernel can replace one 5X5 kernel?__<br>
+```
 The receptive field is the same.
+```
 
 
 + __Less parameters usually means less overfitting.__ 
