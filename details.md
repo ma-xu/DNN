@@ -13,6 +13,7 @@ presented in [Network in Network, page 2.]<br>
 
 + <font color=Chocolate size=4>Why two 3X3 kernel can replace one 5X5 kernel?</font><br>
 The receptive field is the same.
+<font color=gray size=72>color=gray</font>
 
 + Less parameters usually means less overfitting. 
 
