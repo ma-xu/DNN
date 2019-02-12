@@ -17,7 +17,7 @@ from keras.layers import Conv2D,MaxPooling2D
 from keras.callbacks import TensorBoard,ModelCheckpoint
 import os
 
-batch_size = 32
+batch_size = 64
 num_class = 10
 epochs = 40
 save_dir = os.path.join(os.getcwd(),'saved_models')

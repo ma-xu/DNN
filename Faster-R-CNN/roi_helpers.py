@@ -93,6 +93,32 @@ def calc_iou(R,img_data,C, class_mapping):
     return np.expand_dims(X,axis=0),np.expand_dims(Y1,axis=0),np.expand_dims(Y2,axis=0),IoUs
 
 
+def apply_regr(x, y, w, h, tx, ty, tw, th):
+    try:
+        cx = x + w/2.
+        cy = y + h/2.
+        cx1 = tx * w + cx
+        cy1 = ty * h + cy
+        w1 = math.exp(tw) * w
+        h1 = math.exp(th) * h
+        x1 = cx1 - w1/2.
+        y1 = cy1 - h1/2.
+        x1 = int(round(x1))
+        y1 = int(round(y1))
+        w1 = int(round(w1))
+        h1 = int(round(h1))
+
+        return x1, y1, w1, h1
+
+    except ValueError:
+        return x, y, w, h
+    except OverflowError:
+        return x, y, w, h
+    except Exception as e:
+        print(e)
+        return x, y, w, h
+
+
 def apply_regr_np(X,T):
     try:
         x = X[0, :, :]
