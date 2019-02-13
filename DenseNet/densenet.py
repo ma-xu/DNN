@@ -123,7 +123,7 @@ def DenseNet(nb_classes,img_dim,depth, nb_dense_block,growth_rate,nb_filter, dro
 
     x = Activation('relu')(x)
     x = GlobalAveragePooling2D(data_format=K.image_data_format())(x)
-    x = Dense(nb_classes,activation='softmax',kernel_regularizer=l2(weight_decay),bias_regularizer=(weight_decay))(x)
+    x = Dense(nb_classes,activation='softmax',kernel_regularizer=l2(weight_decay),bias_regularizer=l2(weight_decay))(x)
 
     densenet = Model(inputs=[model_input],outputs=[x],name='DenseNet')
 
