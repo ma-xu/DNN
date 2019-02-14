@@ -63,3 +63,6 @@ Collected by Xu Ma.  <xuma@my.unt.edu>
 
 + [Bag of Freebies for Training Object Detection Neural Networks](https://arxiv.org/pdf/1902.04103.pdf)
 <br> Mu li, an improvement teach for object detection.
+
++ [Few-shot Object Detection via Feature Reweighting](https://arxiv.org/pdf/1812.01866.pdf)
+<br> National U Singapore, UCB(Zhuang Liu)
