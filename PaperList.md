@@ -56,3 +56,10 @@ Collected by Xu Ma.  <xuma@my.unt.edu>
 + [DropBlock]()
 + [Cutout]()
 + [DropConnect]()
+
+## State-of-Art in ArXiv
++ [Group Normalization](https://arxiv.org/pdf/1803.08494.pdf)
+<br> Kaiming He
+
++ [Bag of Freebies for Training Object Detection Neural Networks](https://arxiv.org/pdf/1902.04103.pdf)
+<br> Mu li, an improvement teach for object detection.
