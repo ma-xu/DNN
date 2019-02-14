@@ -57,7 +57,7 @@ Collected by Xu Ma.  <xuma@my.unt.edu>
 + [Cutout]()
 + [DropConnect]()
 
-## State-of-Art in ArXiv
+# State-of-Art in ArXiv
 + [Group Normalization](https://arxiv.org/pdf/1803.08494.pdf)
 <br> Kaiming He
 
