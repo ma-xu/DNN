@@ -1,4 +1,5 @@
 import numpy as np
+import keras.applications.resnet.ResNet50
 X,Y = np.meshgrid(np.arange(4),np.arange((5)))
 
 pool_list=[1,2,4]

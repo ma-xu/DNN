@@ -117,6 +117,9 @@ def _shortcut(input,residual):
     #input channels changes to residual channels
     shortcut = input
     # Using [1,1] kernel size Conv layer to make the shapes same.
+    # Actually, we don't have to validate the stride since the feature maps size will not change in each block.--xuma.
+    # The above line is WRONG. Validating size is for connected short cut between different sizes feature maps.
+    # Which is indicated by dotted line in Fig 3 in the paper.
     if stride_width >1 or stride_height>1 or not equal_channels:
         shortcut = Conv2D(filters=residual_shape[CHANNEL_AXIS],kernel_size=(1,1),
                           strides=(stride_width,stride_height),padding='valid',
@@ -129,21 +132,26 @@ def _shortcut(input,residual):
 def _residual_block(block_function,filters,repetitions,is_first_layer=False):
    """
    Build a residual block with repeating bottleneck blocks.
-   :param block_function:
+   :param block_function: The block function to use. This is either `basic_block` or `bottleneck`.
+   for layers<50, we use basic lock, which means [3X3,64],[3X3,64]
+   for layers>=50, we use bottleneck, which means [1X1,64],[3X3,64],[1X1,256]
+   Here the channels is not fixed to 64, 256 et., refer to the original paper.
    :param filters:
    :param repetitions: repeat times
    :param is_first_layer:
    :return:
    """
-   def f(input):
+   def f(data):
         for i in range(repetitions):
             init_strides=(1,1)
+            # Described in Table1, Conv3_1,Conv4_1,Conv5_1, stride=2
             if(i == 0) and not is_first_layer:
                 init_strides=(2,2)
-            input = block_function(filters=filters,init_strides=init_strides,
-                                   is_first_block_of_first_layer=(is_first_layer and i==0))(input)
 
-        return input
+            data = block_function(filters=filters,init_strides=init_strides,
+                                   is_first_block_of_first_layer=(is_first_layer and i==0))(data)
+
+        return data
 
    return f
 
@@ -169,27 +177,27 @@ def basic_block(filters,init_strides=(1,1),is_first_block_of_first_layer=False):
 
     return f
 
-def _bottleneck(filters,init_strides=(1,1),is_first_block_of_first_layer=False):
+def bottleneck(filters,init_strides=(1,1),is_first_block_of_first_layer=False):
     """Bottleneck architecture for > 34 layer resnet.
     Follows improved proposed scheme in http://arxiv.org/pdf/1603.05027v2.pdf
     Returns:
         A final conv layer of filters * 4
     """
-    def f(input):
+    def f(data):
         if is_first_block_of_first_layer:
             # Don't repeat bn->relu since we just did bn->relu->maxpool
             conv_1_1 = Conv2D(filters=filters,kernel_size=(1,1),
                               strides=init_strides,padding="same",
                               kernel_initializer="he_normal",
-                              kernel_regularizer=l2(1e-4))(input)
+                              kernel_regularizer=l2(1e-4))(data)
 
         else:
             conv_1_1 = _bn_relu_conv(ilters=filters,kernel_size=(1,1),
-                              strides=init_strides)(input)
+                              strides=init_strides)(data)
 
         conv_3_3 = _bn_relu_conv(filters=filters,kernel_size=(3,3))(conv_1_1)
         resdual = _bn_relu_conv(filters=filters*4,kernel_size=(1,1))(conv_3_3)
-
+        return _shortcut(data,resdual)
     return f
 
 
@@ -261,15 +269,15 @@ class ResNetBuilder(object):
 
     @staticmethod
     def build_resnet_50(input_shape, num_outputs):
-        return ResNetBuilder.build(input_shape, num_outputs, basic_block, [3, 4, 6, 3])
+        return ResNetBuilder.build(input_shape, num_outputs, bottleneck, [3, 4, 6, 3])
 
     @staticmethod
     def build_resnet_101(input_shape, num_outputs):
-        return ResNetBuilder.build(input_shape, num_outputs, basic_block, [3, 4, 23, 3])
+        return ResNetBuilder.build(input_shape, num_outputs, bottleneck, [3, 4, 23, 3])
 
     @staticmethod
     def build_resnet_152(input_shape, num_outputs):
-        return ResNetBuilder.build(input_shape, num_outputs, basic_block, [3, 8, 36, 3])
+        return ResNetBuilder.build(input_shape, num_outputs, bottleneck, [3, 8, 36, 3])
 
 
 

@@ -11,6 +11,9 @@ import numpy as np
 import resnet
 
 # Reduce learning rate.
+
+model = resnet.ResNetBuilder.build_resnet_18((3, 32, 32), 10)
+model.summary()
 lr_reducer = ReduceLROnPlateau(factor=np.sqrt(0.1),cooldown=0,patience=5,min_lr=0.5e-6)
 early_stopper = EarlyStopping(min_delta=0.001,patience=10)
 csv_logger = CSVLogger('resnet18_cifar10.csv')
@@ -42,6 +45,7 @@ X_train/=128.
 X_test/=128.
 
 model = resnet.ResNetBuilder.build_resnet_18((image_channels, image_rows, image_cols), nb_classes)
+model.summary()
 model.compile(loss='categorical_crossentropy',optimizer='adam',metrics=['accuracy'])
 
 # Use tensorboard
