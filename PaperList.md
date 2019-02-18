@@ -66,3 +66,12 @@ Collected by Xu Ma.  <xuma@my.unt.edu>
 
 + [Few-shot Object Detection via Feature Reweighting](https://arxiv.org/pdf/1812.01866.pdf)
 <br> National U Singapore, UCB(Zhuang Liu)
+
+## TODO
++ Object detection networks on convolutional feature maps
+
++ R-FCN: Object Detection via Region-based Fully Convolutional Networks
+
++ SSD: Single Shot MultiBox Detector （done）
+
++ DSSD : Deconvolutional Single Shot Detector 
