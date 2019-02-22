@@ -77,3 +77,7 @@ Collected by Xu Ma.  <xuma@my.unt.edu>
 + DSSD : Deconvolutional Single Shot Detector 
 
 + FCN: Fully convolutional networks for semantic segmentation
+
++ Spatial transformer networks
+
++ Deformable convolutional networks
