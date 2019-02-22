@@ -81,3 +81,5 @@ Collected by Xu Ma.  <xuma@my.unt.edu>
 + Spatial transformer networks
 
 + Deformable convolutional networks
+
++ Non-local neural networks
