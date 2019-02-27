@@ -32,13 +32,11 @@ The receptive field is the same.
 
 + __Local receptive field limitation__
 ```
-As we know, convolutional operations process one local field (kernel size) each time. 
-This leads us could not take all whole image structure into consideration. Although 
-the deeper layers always have bigger receptive field and has a better semantic representation，
-the shallower layers could not take such an advantage. Especially for object detection,
-instance segmentation (and some more related CV taskes), taking this global relationship
-into consideration is important due to the competition between resolution and semantics 
-(explain in SSD, FPN, for small object). 
+As we know, convolutional operations process one local field (kernel size) each time.  This leads us could not take all whole
+image structure into consideration. Although the deeper layers always have bigger receptive field and has a better semantic 
+representation，the shallower layers could not take such an advantage. Especially for object detection,instance segmentation 
+(and some more related CV taskes), taking this global relationshipinto consideration is important due to the competition 
+between resolution and semantics (explain in SSD, FPN, for small object). 
 Hence, if the global (or weighted neighbour) fields could benefit for image classification or object detection?
 (Inspired by the abstract of Non-local Neural Networks)
 
