@@ -56,6 +56,7 @@ Collected by Xu Ma.  <xuma@my.unt.edu>
 
 <div style="background:lavender">
 A limitation of object detection is scale. Number of papers designed for mitigating the harm of small objectsin these years </div>
+
 ## Layers
 + [SPPnet](https://arxiv.org/pdf/1406.4729.pdf) Kaiming He
 <br>Spatial Pyramid Pooling in Deep Convolutional Networks for Visual Recognition
