@@ -54,7 +54,8 @@ Collected by Xu Ma.  <xuma@my.unt.edu>
 + [Object detection networks on convolutional feature maps](https://arxiv.org/pdf/1504.06066.pdf)Shaoqing Ren, Kaiming He, Ross Girshick, Xiangyu Zhang, and Jian Sun
 
 ```
-A limitation of object detection is scale. Number of papers designed for mitigating the harm of small objectsin these years 
+A limitation of object detection is scale. Number of papers designed for mitigating the harm of small objectsin these years,
+including SSD,FPN,SNIP,dilated Conv ...
 ```
 
 ## Layers
