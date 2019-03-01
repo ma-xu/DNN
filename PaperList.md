@@ -3,6 +3,7 @@ It's a list for state-of-art computer version papers that I have read.<br>
 Collected by Xu Ma.  <xuma@my.unt.edu>
 
 
+
 ## Classification
  + [TorontoCNN(5ConvLayers)](https://papers.nips.cc/paper/4824-imagenet-classification-with-deep-convolutional-neural-networks.pdf) Hinton
 	<br>ImageNet Classification with Deep Convolutional Neural Networks
@@ -52,6 +53,9 @@ Collected by Xu Ma.  <xuma@my.unt.edu>
  
 + [Object detection networks on convolutional feature maps](https://arxiv.org/pdf/1504.06066.pdf)Shaoqing Ren, Kaiming He, Ross Girshick, Xiangyu Zhang, and Jian Sun
 
+```
+A limitation of object detection is scale. Number of papers designed for mitigating the harm of small objectsin these years (2016-2018),including SSD,FPN,dilated Conv, SNIP...
+```
 ## Layers
 + [SPPnet](https://arxiv.org/pdf/1406.4729.pdf) Kaiming He
 <br>Spatial Pyramid Pooling in Deep Convolutional Networks for Visual Recognition
