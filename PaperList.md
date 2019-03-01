@@ -44,13 +44,13 @@ Collected by Xu Ma.  <xuma@my.unt.edu>
 + [GlobalAveragePooling for Localization](https://www.cv-foundation.org/openaccess/content_cvpr_2016/papers/Zhou_Learning_Deep_Features_CVPR_2016_paper.pdf) Bolei zhou, MIT,CVPR2016
 <br> Learning Deep Features for Discriminative Localization
 
-+ [R-FCN](https://arxiv.org/pdf/1605.06409.pdf)
++ [R-FCN](https://arxiv.org/pdf/1605.06409.pdf)Jifeng Dai, Yi Li, Kaiming He, Jian Sun
  <br> R-FCN: Object Detection via Region-based Fully Convolutional Networks
  
-+ [SSD](https://arxiv.org/pdf/1512.02325.pdf) 
++ [SSD](https://arxiv.org/pdf/1512.02325.pdf) Wei Liu
  <br>SSD: Single Shot MultiBox Detector
  
-+ [Object detection networks on convolutional feature maps](https://arxiv.org/pdf/1504.06066.pdf)
++ [Object detection networks on convolutional feature maps](https://arxiv.org/pdf/1504.06066.pdf)Shaoqing Ren, Kaiming He, Ross Girshick, Xiangyu Zhang, and Jian Sun
 
 ## Layers
 + [SPPnet](https://arxiv.org/pdf/1406.4729.pdf) Kaiming He
@@ -88,3 +88,15 @@ Collected by Xu Ma.  <xuma@my.unt.edu>
 + Non-local neural networks
 
 + Scale-Aware Trident Networks for Object Detection(*)
+
++ An analysis of scale invariance in object detection–SNIP
+
++ Pyramid Scene Parsing Network
+
++ SNIPER: Efficient multi-scale training
+
++ Cascade R-CNN: Delving intohigh quality object detection
+
++ Multi-scale context aggregation by dilated convolutions
+
+
