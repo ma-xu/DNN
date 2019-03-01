@@ -44,6 +44,14 @@ Collected by Xu Ma.  <xuma@my.unt.edu>
 + [GlobalAveragePooling for Localization](https://www.cv-foundation.org/openaccess/content_cvpr_2016/papers/Zhou_Learning_Deep_Features_CVPR_2016_paper.pdf) Bolei zhou, MIT,CVPR2016
 <br> Learning Deep Features for Discriminative Localization
 
++ [R-FCN](https://arxiv.org/pdf/1605.06409.pdf)
+ <br> R-FCN: Object Detection via Region-based Fully Convolutional Networks
+ 
++ [SSD](https://arxiv.org/pdf/1512.02325.pdf) 
+ <br>SSD: Single Shot MultiBox Detector
+ 
++ [Object detection networks on convolutional feature maps](https://arxiv.org/pdf/1504.06066.pdf)
+
 ## Layers
 + [SPPnet](https://arxiv.org/pdf/1406.4729.pdf) Kaiming He
 <br>Spatial Pyramid Pooling in Deep Convolutional Networks for Visual Recognition
@@ -68,11 +76,6 @@ Collected by Xu Ma.  <xuma@my.unt.edu>
 <br> National U Singapore, UCB(Zhuang Liu)
 
 ## TODO
-+ Object detection networks on convolutional feature maps
-
-+ R-FCN: Object Detection via Region-based Fully Convolutional Networks
-
-+ SSD: Single Shot MultiBox Detector （done）
 
 + DSSD : Deconvolutional Single Shot Detector 
 
@@ -83,3 +86,5 @@ Collected by Xu Ma.  <xuma@my.unt.edu>
 + Deformable convolutional networks
 
 + Non-local neural networks
+
++ Scale-Aware Trident Networks for Object Detection(*)
