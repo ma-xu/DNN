@@ -105,4 +105,6 @@ including SSD,FPN,SNIP,dilated Conv ...
 
 + Multi-scale context aggregation by dilated convolutions
 
++ Generalized Intersection over Union
+
 
