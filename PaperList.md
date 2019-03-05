@@ -107,4 +107,5 @@ including SSD,FPN,SNIP,dilated Conv ...
 
 + Generalized Intersection over Union
 
++ *Focal Loss*
 
