@@ -107,5 +107,6 @@ including SSD,FPN,SNIP,dilated Conv ...
 
 + Generalized Intersection over Union
 
-+ *Focal Loss*
++ RetinaNet(Focal Loss for Dense Object Detection)
+
 
