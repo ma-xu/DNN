@@ -109,4 +109,8 @@ including SSD,FPN,SNIP,dilated Conv ...
 
 + RetinaNet(Focal Loss for Dense Object Detection)
 
++ Inside-outside net:Detecting objects in context with skip pooling and recurrent neural networks
+
++ ParseNet: Looking wider to see better
+
 
