@@ -83,6 +83,8 @@ including SSD,FPN,SNIP,dilated Conv ...
 
 ## TODO
 
++ Visualizing and understanding convolutional neural networks
+
 + DSSD : Deconvolutional Single Shot Detector 
 
 + FCN: Fully convolutional networks for semantic segmentation
