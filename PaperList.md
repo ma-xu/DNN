@@ -115,4 +115,6 @@ including SSD,FPN,SNIP,dilated Conv ...
 
 + ParseNet: Looking wider to see better
 
++ [A Basic Introduction to Separable Convolutions](https://towardsdatascience.com/a-basic-introduction-to-separable-convolutions-b99ec3102728)
+
 
