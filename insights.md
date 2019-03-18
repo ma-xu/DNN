@@ -12,3 +12,4 @@ A problem is that which combinations are most discriminative.
 The tradtional conv layer is combinationof all channels, channel-wise is a single channel combination.
 eg. channel=7. we should have a combination of 7+ 7(in 2)+ ... +7(in 7)
 
++ [Attention Mechanism in Computer Vision](https://cloud.tencent.com/developer/news/247227)
