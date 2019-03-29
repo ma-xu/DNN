@@ -81,6 +81,9 @@ including SSD,FPN,SNIP,dilated Conv ...
 + [Few-shot Object Detection via Feature Reweighting](https://arxiv.org/pdf/1812.01866.pdf)
 <br> National U Singapore, UCB(Zhuang Liu)
 
++ [TensorMask: A Foundation for Dense Object Segmentation](https://arxiv.org/pdf/1903.12174.pdf)
+<br> FAIR
+
 ## TODO
 
 + Visualizing and understanding convolutional neural networks
