@@ -6,6 +6,7 @@ Collected by Xu Ma.  <xuma@my.unt.edu>
 
 ## Classification
 + [AlexNet](https://papers.nips.cc/paper/4824-imagenet-classification-with-deep-convolutional-neural-networks.pdf)
+  <sub>almost the start of DNN, also the start of group channels.</sub>
 + [VGG](https://arxiv.org/pdf/1409.1556.pdf "VGG16")
 + [Highway-Net](https://arxiv.org/pdf/1507.06228.pdf)
 + [ResNet](https://arxiv.org/pdf/1512.03385.pdf)
