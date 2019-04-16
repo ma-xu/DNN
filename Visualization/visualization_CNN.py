@@ -7,14 +7,14 @@ import cv2
 import random
 from keras import backend as K
 
-selected_layer = 'block2_conv2'
+selected_layer = 'block5_conv3'
 
 base_model = VGG16(weights='imagenet',include_top=False)
 # Choose which layer to output
 #base_model = Model(inputs=base_model.input,outputs =base_model.get_layer('block5_conv3').output)
 base_model.summary()
 
-image_path='testimage.jpg';
+image_path='003758.png';
 img = image.load_img(image_path);
 x = image.img_to_array(img)
 print(x.shape)
@@ -35,5 +35,6 @@ for i in range(20):
     rand_channel = random.randint(0,channels-1)
 
     cv2.imshow(selected_layer+"_channel_"+str(rand_channel),inter_tensor[0,:,:,rand_channel])
+    cv2.imwrite('aaa.png',inter_tensor[0,:,:,124])
     cv2.waitKey(0)
     cv2.destroyAllWindows();
