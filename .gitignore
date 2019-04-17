@@ -1,3 +1,6 @@
 saved_models
 .idea
 PyTorch/pytorch_cifar/models/__pycache__/
+PyTorch/pytorch_cifar/__pycache__/
+PyTorch/pytorch_cifar/checkpoint/
+PyTorch/pytorch_cifar/data/
