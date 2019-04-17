@@ -122,3 +122,11 @@ def format_time(seconds):
     if f == '':
         f = '0ms'
     return f
+
+def write_record(file_path,str):
+    if not os.path.exists(file_path):
+        # os.makedirs(file_path)
+        os.system(r"touch {}".format(file_path))
+    f = open(file_path, 'a')
+    f.write(str)
+    f.close()

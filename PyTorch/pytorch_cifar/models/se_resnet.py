@@ -7,8 +7,24 @@ Date: Apr/15/2019
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-from se_module import SELayer
 
+
+class SELayer(nn.Module):
+    def __init__(self, channel, reduction=16):
+        super(SELayer, self).__init__()
+        self.avg_pool = nn.AdaptiveAvgPool2d(1)
+        self.fc = nn.Sequential(
+            nn.Linear(channel, channel // reduction, bias=False),
+            nn.ReLU(inplace=True),
+            nn.Linear(channel // reduction, channel, bias=False),
+            nn.Sigmoid()
+        )
+
+    def forward(self, x):
+        b, c, _, _ = x.size()
+        y = self.avg_pool(x).view(b, c)
+        y = self.fc(y).view(b, c, 1, 1)
+        return x * y.expand_as(x)
 
 
 class SEPreActBlock(nn.Module):
@@ -50,6 +66,7 @@ class SEPreActBootleneck(nn.Module):
         self.conv2 = nn.Conv2d(planes,planes,kernel_size=3,stride=stride,padding=1,bias=False)
         self.bn3 = nn.BatchNorm2d(planes)
         self.conv3 = nn.Conv2d(planes,self.expansion*planes,kernel_size=1,bias=False)
+        self.se = SELayer(self.expansion*planes, reduction)
 
         if stride != 1 or in_planes != self.expansion * planes:
             self.shortcut = nn.Sequential(
@@ -99,20 +116,26 @@ class SEResNet(nn.Module):
         out = self.linear(out)
         return out
 
+
 def SEResNet18():
     return SEResNet(SEPreActBlock, [2,2,2,2])
+
 
 def SEResNet34():
     return SEResNet(SEPreActBlock, [3,4,6,3])
 
+
 def SEResNet50():
     return SEResNet(SEPreActBootleneck, [3,4,6,3])
+
 
 def SEResNet101():
     return SEResNet(SEPreActBootleneck, [3,4,23,3])
 
+
 def SEResNet152():
     return SEResNet(SEPreActBootleneck, [3,8,36,3])
+
 
 def test():
     net = SEResNet18()
@@ -120,4 +143,4 @@ def test():
     print(y.size())
 
 
-test()
+# test()

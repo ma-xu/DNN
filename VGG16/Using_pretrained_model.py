@@ -8,10 +8,11 @@ from keras.applications.vgg16 import VGG16
 from keras.applications.vgg16 import preprocess_input
 from keras.applications.vgg16 import decode_predictions
 from keras.preprocessing import image
+from keras.layers import Input
 import numpy as np
 
 # include_top means if include the decision block (3 Dense layers and softmax activation layer)
-model=VGG16(weights='imagenet',include_top=True)
+model=VGG16(weights='imagenet',include_top=False, input_shape=(160,320,3))
 print(len(model.layers))
 model.summary()
 

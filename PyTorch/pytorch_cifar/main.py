@@ -12,13 +12,14 @@ import torchvision.transforms as transforms
 
 import os
 import argparse
+from torchsummary import summary
 
 from models import *
 from utils import progress_bar
+from utils import write_record
 
 os.environ["HDF5_USE_FILE_LOCKING"] = "FALSE"
-os.environ["CUDA_VISIBLE_DEVICES"] = "0,1,2,3"
-
+os.environ["CUDA_VISIBLE_DEVICES"] = "0"
 # parser = argparse.ArgumentParser(description='PyTorch CIFAR10 Training')
 # parser.add_argument('--lr', default=0.1, type=float, help='learning rate')
 # parser.add_argument('--resume', '-r', action='store_true', help='resume from checkpoint')
@@ -46,10 +47,10 @@ transform_test = transforms.Compose([
 ])
 
 trainset = torchvision.datasets.CIFAR10(root='./data', train=True, download=True, transform=transform_train)
-trainloader = torch.utils.data.DataLoader(trainset, batch_size=512, shuffle=True, num_workers=2)
+trainloader = torch.utils.data.DataLoader(trainset, batch_size=512, shuffle=True, num_workers=1)
 
 testset = torchvision.datasets.CIFAR10(root='./data', train=False, download=True, transform=transform_test)
-testloader = torch.utils.data.DataLoader(testset, batch_size=512, shuffle=False, num_workers=2)
+testloader = torch.utils.data.DataLoader(testset, batch_size=512, shuffle=False, num_workers=1)
 
 classes = ('plane', 'car', 'bird', 'cat', 'deer', 'dog', 'frog', 'horse', 'ship', 'truck')
 
@@ -57,7 +58,7 @@ classes = ('plane', 'car', 'bird', 'cat', 'deer', 'dog', 'frog', 'horse', 'ship'
 print('==> Building model..')
 # net = VGG('VGG16')
 # net = ResNet18()
-net = PreActResNet18()
+#net = PreActResNet18()
 # net = GoogLeNet()
 # net = DenseNet121()
 # net = ResNeXt29_2x64d()
@@ -66,8 +67,19 @@ net = PreActResNet18()
 # net = DPN92()
 # net = ShuffleNetG2()
 # net = SENet18()
+# net = SEResNet18()
+net = SEResNet34()
 # net = ShuffleNetV2(1)
+
 net = net.to(device)
+netName = net._get_name()
+
+# Get parameters number in a model
+pytorch_total_params = sum(p.numel() for p in net.parameters())
+print(pytorch_total_params)
+# Try torchsummary library
+summary(net, (3, 32, 32))
+
 if device == 'cuda':
     net = torch.nn.DataParallel(net)
     cudnn.benchmark = True
@@ -79,18 +91,32 @@ if resume:
     checkpoint = torch.load('./checkpoint/ckpt.t7')
     net.load_state_dict(checkpoint['net'])
     best_acc = checkpoint['acc']
+    print("BEST_ACCURACY: "+str(best_acc))
     start_epoch = checkpoint['epoch']
 
 criterion = nn.CrossEntropyLoss()
 optimizer = optim.SGD(net.parameters(), lr=lr, momentum=0.9, weight_decay=5e-4)
 
+
+
+def adjust_learning_rate(optimizer, epoch, lr):
+    """Sets the learning rate to the initial LR decayed by 10 every 80 epochs"""
+    lr = lr * (0.1 ** (epoch // 70))
+    for param_group in optimizer.param_groups:
+        param_group['lr'] = lr
+
 # Training
 def train(epoch):
-    print('\nEpoch: %d' % epoch)
+    adjust_learning_rate(optimizer, epoch, lr)
+    print('\nEpoch: %d   Learning rate: %f' % (epoch, optimizer.param_groups[0]['lr']))
+    print("\nAllocated GPU memory:", torch.cuda.memory_allocated())
     net.train()
     train_loss = 0
     correct = 0
     total = 0
+
+
+
     for batch_idx, (inputs, targets) in enumerate(trainloader):
         inputs, targets = inputs.to(device), targets.to(device)
         optimizer.zero_grad()
@@ -106,6 +132,11 @@ def train(epoch):
 
         progress_bar(batch_idx, len(trainloader), 'Loss: %.3f | Acc: %.3f%% (%d/%d)'
             % (train_loss/(batch_idx+1), 100.*correct/total, correct, total))
+
+    file_path=netName+'_train.txt'
+    record_str=str(epoch)+'\t'+"%.3f"%(train_loss/(batch_idx+1))+'\t'+"%.3f"%(100.*correct/total)+'\n'
+    write_record(file_path,record_str)
+
 
 def test(epoch):
     global best_acc
@@ -127,6 +158,11 @@ def test(epoch):
             progress_bar(batch_idx, len(testloader), 'Loss: %.3f | Acc: %.3f%% (%d/%d)'
                 % (test_loss/(batch_idx+1), 100.*correct/total, correct, total))
 
+    file_path = netName + '_test.txt'
+    record_str = str(epoch) + '\t' + "%.3f" % (test_loss / (batch_idx + 1)) + '\t' + "%.3f" % (
+                100. * correct / total) + '\n'
+    write_record(file_path, record_str)
+
     # Save checkpoint.
     acc = 100.*correct/total
     if acc > best_acc:
@@ -142,6 +178,6 @@ def test(epoch):
         best_acc = acc
 
 
-for epoch in range(start_epoch, start_epoch+200):
+for epoch in range(start_epoch, start_epoch+300):
     train(epoch)
     test(epoch)
