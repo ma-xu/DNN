@@ -6,7 +6,8 @@
 #SBATCH --qos=large
 #SBATCH -p public
 #SBATCH -N 1
-#SBATCH -n 1
+#SBATCH -n 4
+#SBATCH -c 1
 #SBATCH --gres=gpu:4
 #SBATCH -t 500:00:00
 #SBATCH --output=out_%j.log
