@@ -72,6 +72,7 @@ elif args.netName=='DPN92': net = DPN92()
 elif args.netName=='SENet18': net = SENet18()
 elif args.netName=='SEResNet18': net = SEResNet18()
 elif args.netName=='SEResNet34': net = SEResNet34()
+elif args.netName=='PSEResNet18': net = PSEResNet18()
 elif args.netName=='ShuffleNetV2(1)': net = ShuffleNetV2(1)
 else:
     args.netName = PreActResNet18

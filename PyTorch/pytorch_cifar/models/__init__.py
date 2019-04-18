@@ -13,3 +13,4 @@ from .preact_resnet import *
 from .mobilenet import *
 from .mobilenetv2 import *
 from .se_resnet import *
+from .pse_resnet import *

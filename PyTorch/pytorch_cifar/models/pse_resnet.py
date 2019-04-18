@@ -30,12 +30,12 @@ class SELayer(nn.Module):
         return y
 
 
-class SEPreActBlock(nn.Module):
+class PSEPreActBlock(nn.Module):
     """SE pre-activation of the BasicBlock"""
     expansion = 1 # last_block_channel/first_block_channel
 
     def __init__(self,in_planes,planes,stride=1,reduction=16):
-        super(SEPreActBlock, self).__init__()
+        super(PSEPreActBlock, self).__init__()
         self.bn1 = nn.BatchNorm2d(in_planes)
         self.conv1 = nn.Conv2d(in_planes,planes,kernel_size=3,stride=stride,padding=1,bias=False)
         self.bn2 = nn.BatchNorm2d(planes)
@@ -57,12 +57,12 @@ class SEPreActBlock(nn.Module):
         return out
 
 
-class SEPreActBootleneck(nn.Module):
+class PSEPreActBootleneck(nn.Module):
     """Pre-activation version of the bottleneck module"""
     expansion = 4 # last_block_channel/first_block_channel
 
     def __init__(self,in_planes,planes,stride=1,reduction=16):
-        super(SEPreActBootleneck, self).__init__()
+        super(PSEPreActBootleneck, self).__init__()
         self.bn1 = nn.BatchNorm2d(in_planes)
         self.conv1=nn.Conv2d(in_planes,planes,kernel_size=1,bias=False)
         self.bn2 = nn.BatchNorm2d(planes)
@@ -88,9 +88,9 @@ class SEPreActBootleneck(nn.Module):
         return out
 
 
-class SEResNet(nn.Module):
+class PSEResNet(nn.Module):
     def __init__(self,block,num_blocks,num_classes=10,reduction=16):
-        super(SEResNet, self).__init__()
+        super(PSEResNet, self).__init__()
         self.in_planes=64
         self.conv1 = nn.Conv2d(3,64,kernel_size=3,stride=1,padding=1,bias=False)
         self.layer1 = self._make_layer(block, 64, num_blocks[0], stride=1,reduction=reduction)
@@ -120,28 +120,28 @@ class SEResNet(nn.Module):
         return out
 
 
-def SEResNet18():
-    return SEResNet(SEPreActBlock, [2,2,2,2])
+def PSEResNet18():
+    return PSEResNet(PSEPreActBlock, [2,2,2,2])
 
 
-def SEResNet34():
-    return SEResNet(SEPreActBlock, [3,4,6,3])
+def PSEResNet34():
+    return PSEResNet(PSEPreActBlock, [3,4,6,3])
 
 
-def SEResNet50():
-    return SEResNet(SEPreActBootleneck, [3,4,6,3])
+def PSEResNet50():
+    return PSEResNet(PSEPreActBootleneck, [3,4,6,3])
 
 
-def SEResNet101():
-    return SEResNet(SEPreActBootleneck, [3,4,23,3])
+def PSEResNet101():
+    return PSEResNet(PSEPreActBootleneck, [3,4,23,3])
 
 
-def SEResNet152():
-    return SEResNet(SEPreActBootleneck, [3,8,36,3])
+def PSEResNet152():
+    return PSEResNet(PSEPreActBootleneck, [3,8,36,3])
 
 
 def test():
-    net = SEResNet18()
+    net = PSEResNet18()
     y = net((torch.randn(1,3,32,32)))
     print(y.size())
 
