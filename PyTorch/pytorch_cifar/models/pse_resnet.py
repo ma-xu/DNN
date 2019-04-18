@@ -1,8 +1,9 @@
-"""SE-ResNet in PyTorch
+"""PSE-ResNet in PyTorch
+Pre-activated SE-ResNet
 Based on preact_resnet.py
 
 Author: Xu Ma.
-Date: Apr/15/2019
+Date: Apr/17/2019
 """
 import torch
 import torch.nn as nn
@@ -10,21 +11,23 @@ import torch.nn.functional as F
 
 
 class SELayer(nn.Module):
-    def __init__(self, channel, reduction=16):
+    def __init__(self,in_cahnnel, channel, reduction=16):
         super(SELayer, self).__init__()
         self.avg_pool = nn.AdaptiveAvgPool2d(1)
         self.fc = nn.Sequential(
-            nn.Linear(channel, channel // reduction, bias=False),
+            nn.Linear(in_cahnnel, in_cahnnel // reduction, bias=False),
             nn.ReLU(inplace=True),
-            nn.Linear(channel // reduction, channel, bias=False),
+            nn.Linear(in_cahnnel // reduction, channel, bias=False),
             nn.Sigmoid()
         )
 
     def forward(self, x):
-        b, c, _, _ = x.size()
+        b, c, _, _ = x.size() # b: number; c: channel;
         y = self.avg_pool(x).view(b, c) #like resize() in numpy
-        y = self.fc(y).view(b, c, 1, 1)
-        return x * y.expand_as(x)
+        y = self.fc(y)
+        b,out_channel = y.size()
+        y = y.view(b, out_channel, 1, 1)
+        return y
 
 
 class SEPreActBlock(nn.Module):
@@ -37,19 +40,19 @@ class SEPreActBlock(nn.Module):
         self.conv1 = nn.Conv2d(in_planes,planes,kernel_size=3,stride=stride,padding=1,bias=False)
         self.bn2 = nn.BatchNorm2d(planes)
         self.conv2 = nn.Conv2d(planes,planes,kernel_size=3,stride=1,padding=1,bias=False)
-        self.se = SELayer(planes,reduction)
+        self.se = SELayer(in_cahnnel=in_planes,channel=self.expansion*planes,reduction=reduction)
         if stride !=1 or in_planes!=self.expansion*planes:
             self.shortcut = nn.Sequential(
                 nn.Conv2d(in_planes,self.expansion*planes,kernel_size=1,stride=stride,bias=False)
             )
 
     def forward(self, x):
+        PSE = self.se(x)
         out = F.relu(self.bn1(x))
         shortcut = self.shortcut(out) if hasattr(self,'shortcut') else x
         out = self.conv1(out)
         out = self.conv2(F.relu(self.bn2(out)))
-        # Add SE block
-        out = self.se(out)
+        out = out * PSE.expand_as(out)
         out += shortcut
         return out
 
@@ -66,21 +69,21 @@ class SEPreActBootleneck(nn.Module):
         self.conv2 = nn.Conv2d(planes,planes,kernel_size=3,stride=stride,padding=1,bias=False)
         self.bn3 = nn.BatchNorm2d(planes)
         self.conv3 = nn.Conv2d(planes,self.expansion*planes,kernel_size=1,bias=False)
-        self.se = SELayer(self.expansion*planes, reduction)
-
+        #self.se = SELayer(self.expansion*planes, reduction)
+        self.se = SELayer(in_cahnnel=in_planes, channel=self.expansion * planes, reduction=reduction)
         if stride != 1 or in_planes != self.expansion * planes:
             self.shortcut = nn.Sequential(
                 nn.Conv2d(in_planes, self.expansion * planes, kernel_size=1, stride=stride, bias=False)
             )
 
     def forward(self, x):
+        PSE = self.se(x)
         out = F.relu(self.bn1(x))
         shortcut = self.shortcut(out) if hasattr(self,'shortcut') else x
         out = self.conv1(out)
         out = self.conv2(F.relu(self.bn2(out)))
         out = self.conv3(F.relu(self.bn3(out)))
-        # Add SE block
-        out = self.se(out)
+        out = out * PSE.expand_as(out)
         out +=shortcut
         return out
 
@@ -139,14 +142,8 @@ def SEResNet152():
 
 def test():
     net = SEResNet18()
-    y = net((torch.randn(1,64,32,32)))
+    y = net((torch.randn(1,3,32,32)))
     print(y.size())
 
 
-
-def test_SELayer():
-    net = SELayer(channel=64)
-    y = net((torch.randn(1, 64, 32, 32)))
-    print(y.size())
 # test()
-test_SELayer()

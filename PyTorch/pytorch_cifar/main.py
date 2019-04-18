@@ -12,7 +12,7 @@ import torchvision.transforms as transforms
 
 import os
 import argparse
-from torchsummary import summary
+# from torchsummary import summary
 
 from models import *
 from utils import progress_bar
@@ -67,8 +67,8 @@ print('==> Building model..')
 # net = DPN92()
 # net = ShuffleNetG2()
 # net = SENet18()
-# net = SEResNet18()
-net = SEResNet34()
+net = SEResNet18()
+#net = SEResNet34()
 # net = ShuffleNetV2(1)
 
 net = net.to(device)
@@ -78,7 +78,7 @@ netName = net._get_name()
 pytorch_total_params = sum(p.numel() for p in net.parameters())
 print(pytorch_total_params)
 # Try torchsummary library
-summary(net, (3, 32, 32))
+#summary(net, (3, 32, 32))
 
 if device == 'cuda':
     net = torch.nn.DataParallel(net)
