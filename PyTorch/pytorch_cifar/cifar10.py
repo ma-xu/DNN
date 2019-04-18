@@ -25,6 +25,7 @@ parser.add_argument('--lr', default=0.1, type=float, help='learning rate')
 parser.add_argument('--resume', '-r',default=False, action='store_true', help='resume from checkpoint')
 parser.add_argument('--netName', default='PreActResNet18', type=str, help='choosing network')
 parser.add_argument('--bs', default=128, type=int, help='batch size')
+parser.add_argument('--es', default=300, type=int, help='epoch size')
 args = parser.parse_args()
 
 
@@ -186,6 +187,6 @@ def test(epoch):
         best_acc = acc
 
 
-for epoch in range(start_epoch, start_epoch+300):
+for epoch in range(start_epoch, start_epoch+args.es):
     train(epoch)
     test(epoch)
