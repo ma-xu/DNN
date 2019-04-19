@@ -21,7 +21,7 @@ from models import *
 from utils import *
 
 os.environ["HDF5_USE_FILE_LOCKING"] = "FALSE"
-os.environ["CUDA_VISIBLE_DEVICES"] = "0"
+os.environ["CUDA_VISIBLE_DEVICES"] = "0,1,2,3"
 parser = argparse.ArgumentParser(description='PyTorch CIFAR10 Training')
 parser.add_argument('--lr', default=0.1, type=float, help='learning rate')
 parser.add_argument('--resume', '-r',default=False, action='store_true', help='resume from checkpoint')
