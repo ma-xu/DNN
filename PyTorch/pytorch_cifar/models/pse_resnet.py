@@ -120,24 +120,24 @@ class PSEResNet(nn.Module):
         return out
 
 
-def PSEResNet18():
-    return PSEResNet(PSEPreActBlock, [2,2,2,2])
+def PSEResNet18(num_classes=10):
+    return PSEResNet(PSEPreActBlock, [2,2,2,2],num_classes)
 
 
-def PSEResNet34():
-    return PSEResNet(PSEPreActBlock, [3,4,6,3])
+def PSEResNet34(num_classes=10):
+    return PSEResNet(PSEPreActBlock, [3,4,6,3],num_classes)
 
 
-def PSEResNet50():
-    return PSEResNet(PSEPreActBootleneck, [3,4,6,3])
+def PSEResNet50(num_classes=10):
+    return PSEResNet(PSEPreActBootleneck, [3,4,6,3],num_classes)
 
 
-def PSEResNet101():
-    return PSEResNet(PSEPreActBootleneck, [3,4,23,3])
+def PSEResNet101(num_classes=10):
+    return PSEResNet(PSEPreActBootleneck, [3,4,23,3],num_classes)
 
 
-def PSEResNet152():
-    return PSEResNet(PSEPreActBootleneck, [3,8,36,3])
+def PSEResNet152(num_classes=10):
+    return PSEResNet(PSEPreActBootleneck, [3,8,36,3],num_classes)
 
 
 def test():

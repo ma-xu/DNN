@@ -117,24 +117,24 @@ class SEResNet(nn.Module):
         return out
 
 
-def SEResNet18():
-    return SEResNet(SEPreActBlock, [2,2,2,2])
+def SEResNet18(num_classes=10):
+    return SEResNet(SEPreActBlock, [2,2,2,2],num_classes)
 
 
-def SEResNet34():
-    return SEResNet(SEPreActBlock, [3,4,6,3])
+def SEResNet34(num_classes=10):
+    return SEResNet(SEPreActBlock, [3,4,6,3],num_classes)
 
 
-def SEResNet50():
-    return SEResNet(SEPreActBootleneck, [3,4,6,3])
+def SEResNet50(num_classes=10):
+    return SEResNet(SEPreActBootleneck, [3,4,6,3],num_classes)
 
 
-def SEResNet101():
-    return SEResNet(SEPreActBootleneck, [3,4,23,3])
+def SEResNet101(num_classes=10):
+    return SEResNet(SEPreActBootleneck, [3,4,23,3],num_classes)
 
 
-def SEResNet152():
-    return SEResNet(SEPreActBootleneck, [3,8,36,3])
+def SEResNet152(num_classes=10):
+    return SEResNet(SEPreActBootleneck, [3,8,36,3],num_classes)
 
 
 def test():
