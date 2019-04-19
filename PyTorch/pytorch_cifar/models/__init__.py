@@ -14,3 +14,5 @@ from .mobilenet import *
 from .mobilenetv2 import *
 from .se_resnet import *
 from .pse_resnet import *
+from .spp_se_resnet import *
+from .p_spp_se_resnet import *

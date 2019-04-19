@@ -84,6 +84,8 @@ elif args.netName=='SEResNet18': net = SEResNet18(num_classes=args.cifar)
 elif args.netName=='SEResNet34': net = SEResNet34(num_classes=args.cifar)
 elif args.netName=='PSEResNet18': net = PSEResNet18(num_classes=args.cifar)
 elif args.netName=='ShuffleNetV2(1)': net = ShuffleNetV2(1)
+elif args.netName=='SPPSEResNet18': net = SPPSEResNet18(num_classes=args.cifar)
+elif args.netName=='PSPPSEResNet18': net = PSPPSEResNet18(num_classes=args.cifar)
 else:
     args.netName = PreActResNet18
     net = PreActResNet18()
