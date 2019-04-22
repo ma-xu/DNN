@@ -88,10 +88,10 @@ class ImageNetDownSample(data.Dataset):
                     self.train_labels += entry['labels']
                 else:
                     self.train_labels += entry['fine_labels']
-                #resize label range from [1,1000] to [0,1000),
-                #This is required by CrossEntropyLoss
-                self.train_labels[:] = [x-1 for x in self.train_labels]
                 fo.close()
+            # resize label range from [1,1000] to [0,1000),
+            # This is required by CrossEntropyLoss
+            self.train_labels[:] = [x - 1 for x in self.train_labels]
 
             self.train_data = np.concatenate(self.train_data)
             [picnum, pixel] = self.train_data.shape
@@ -114,10 +114,11 @@ class ImageNetDownSample(data.Dataset):
                 self.test_labels = entry['labels']
             else:
                 self.test_labels = entry['fine_labels']
+            fo.close()
+
             # resize label range from [1,1000] to [0,1000),
             # This is required by CrossEntropyLoss
             self.test_labels[:] = [x - 1 for x in self.test_labels]
-            fo.close()
             self.test_data = self.test_data.reshape((picnum, 3, pixel, pixel))
             self.test_data = self.test_data.transpose((0, 2, 3, 1))  # convert to HWC
 
