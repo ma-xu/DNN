@@ -49,7 +49,16 @@ class ImageNetDownSample(data.Dataset):
     """
 
     train_list = [
-        ['train_data_batch_1']
+        ['train_data_batch_1'],
+        ['train_data_batch_2'],
+        ['train_data_batch_3'],
+        ['train_data_batch_4'],
+        ['train_data_batch_5'],
+        ['train_data_batch_6'],
+        ['train_data_batch_7'],
+        ['train_data_batch_8'],
+        ['train_data_batch_9'],
+        ['train_data_batch_10']
     ]
     test_list = [
         ['val_data'],
