@@ -1,7 +1,7 @@
-'''Train CIFAR with PyTorch.
+'''Train ImageNet with PyTorch.
 
 e.g.
-    python3 cifar.py --netName=PreActResNet18 --cifar=10 --bs=512
+    python3 imagenet.py --netName=PreActResNet18 --imagenet=1000 --bs=512
 '''
 from __future__ import print_function
 
@@ -23,7 +23,7 @@ from utils import *
 
 os.environ["HDF5_USE_FILE_LOCKING"] = "FALSE"
 os.environ["CUDA_VISIBLE_DEVICES"] = "0,1,2,3"
-parser = argparse.ArgumentParser(description='PyTorch CIFAR10 Training')
+parser = argparse.ArgumentParser(description='PyTorch Imagenet32 Training')
 parser.add_argument('--lr', default=0.1, type=float, help='learning rate')
 parser.add_argument('--resume', '-r',default=False, action='store_true', help='resume from checkpoint')
 parser.add_argument('--netName', default='PreActResNet18', type=str, help='choosing network')
@@ -129,7 +129,7 @@ def train(epoch):
         progress_bar(batch_idx, len(trainloader), 'Loss: %.3f | Acc: %.3f%% (%d/%d)'
             % (train_loss/(batch_idx+1), 100.*correct/total, correct, total))
 
-    file_path='records/imagenet32_' + str(args.cifar) + '_' +args.netName+'_train.txt'
+    file_path='records/imagenet32_' +args.netName+'_train.txt'
     record_str=str(epoch)+'\t'+"%.3f"%(train_loss/(batch_idx+1))+'\t'+"%.3f"%(100.*correct/total)+'\n'
     write_record(file_path,record_str)
 
@@ -154,7 +154,7 @@ def test(epoch):
             progress_bar(batch_idx, len(testloader), 'Loss: %.3f | Acc: %.3f%% (%d/%d)'
                 % (test_loss/(batch_idx+1), 100.*correct/total, correct, total))
 
-    file_path = 'records/imagenet32_' + str(args.cifar) + '_' +args.netName+ '_test.txt'
+    file_path = 'records/imagenet32_' +args.netName+ '_test.txt'
     record_str = str(epoch) + '\t' + "%.3f" % (test_loss / (batch_idx + 1)) + '\t' + "%.3f" % (
                 100. * correct / total) + '\n'
     write_record(file_path, record_str)
