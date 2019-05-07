@@ -15,6 +15,7 @@ class CPSPPSELayer(nn.Module):
         if in_channel != channel:
             self.conv1 = nn.Sequential(
                 nn.Conv2d(in_channel, channel, kernel_size=1, stride=1, bias=False),
+                nn.BatchNorm2d(channel),
                 nn.ReLU(inplace=True)
             )
         self.avg_pool1 = nn.AdaptiveAvgPool2d(1)
@@ -156,4 +157,4 @@ def test():
     print(y.size())
 
 
-test()
+#test()
