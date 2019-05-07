@@ -16,7 +16,7 @@ Model | Parameters| Flops | CIFAR-100 |
 [PSEResNet18]() |- |- |-
 [PSEResNet50]() |- |- |-
 [PSEResNet101]() |- |- |-
-[CPSEResNet18]() |- |- |-
+[CPSEResNet18](https://drive.google.com/open?id=1w2VGpFPDuS9NzcfcGfPUXoEdXwVftFep) |- |- |-
 [CPSEResNet50]() |- |- |-
 [CPSEResNet101]() |- |- |-
 [SPPSEResNet18]() |- |- |-
