@@ -17,18 +17,24 @@ import torchvision.transforms as transforms
 import os
 import argparse
 
-from models import *
+#from models import *
+import models as models
 from utils import *
+
+model_names = sorted(name for name in models.__dict__
+    if not name.startswith("__")
+    and callable(models.__dict__[name]))
+print(model_names)
 
 os.environ["HDF5_USE_FILE_LOCKING"] = "FALSE"
 os.environ["CUDA_VISIBLE_DEVICES"] = "0,1,2,3"
 parser = argparse.ArgumentParser(description='PyTorch CIFAR10 Training')
 parser.add_argument('--lr', default=0.1, type=float, help='learning rate')
 parser.add_argument('--resume', '-r',default=False, action='store_true', help='resume from checkpoint')
-parser.add_argument('--netName', default='PreActResNet18', type=str, help='choosing network')
+parser.add_argument('--netName', default='PreActResNet18', choices=model_names, type=str, help='choosing network')
 parser.add_argument('--bs', default=512, type=int, help='batch size')
 parser.add_argument('--es', default=300, type=int, help='epoch size')
-parser.add_argument('--cifar', default=10, type=int, help='dataset classes number')
+parser.add_argument('--cifar', default=100, type=int, help='dataset classes number')
 args = parser.parse_args()
 
 
@@ -69,28 +75,10 @@ classes = ('plane', 'car', 'bird', 'cat', 'deer', 'dog', 'frog', 'horse', 'ship'
 
 # Model
 print('==> Building model..')
-# More models are avaliable in models folder
-if args.netName=='VGG16': net = VGG('VGG16')
-elif args.netName=='ResNet18': net = VGG('VGG16')
-elif args.netName=='PreActResNet18': net = PreActResNet18(num_classes=args.cifar)
-elif args.netName=='GoogLeNet': net = GoogLeNet()
-elif args.netName=='DenseNet121': net = DenseNet121()
-elif args.netName=='ResNeXt29_2x64d': net = ResNeXt29_2x64d()
-elif args.netName=='MobileNet': net = MobileNet()
-elif args.netName=='MobileNetV2': net = MobileNetV2()
-elif args.netName=='DPN92': net = DPN92()
-elif args.netName=='SENet18': net = SENet18(num_classes=args.cifar)
-elif args.netName=='SEResNet18': net = SEResNet18(num_classes=args.cifar)
-elif args.netName=='SEResNet34': net = SEResNet34(num_classes=args.cifar)
-elif args.netName=='PSEResNet18': net = PSEResNet18(num_classes=args.cifar)
-elif args.netName=='ShuffleNetV2(1)': net = ShuffleNetV2(1)
-elif args.netName=='SPPSEResNet18': net = SPPSEResNet18(num_classes=args.cifar)
-elif args.netName=='PSPPSEResNet18': net = PSPPSEResNet18(num_classes=args.cifar)
-else:
-    args.netName = PreActResNet18
-    net = PreActResNet18()
-    print("\n=====NOTICING:=======\n")
-    print("=====Not a valid netName, using default PreActResNet18=====\n\n")
+try:
+    net = models.__dict__[args.netName](num_classes=args.cifar)
+except:
+    net = models.__dict__[args.netName]()
 
 para_numbers = count_parameters(net)
 print("Total parameters number is: "+ str(para_numbers))

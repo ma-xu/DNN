@@ -1,0 +1,2 @@
+Add activation function after SPP pooling
+If need to add a full connection layer (activation) after SPP?

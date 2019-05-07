@@ -9,6 +9,8 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
+__all__ = ['PSEResNet18', 'PSEResNet34', 'PSEResNet50', 'PSEResNet101', 'PSEResNet152']
+
 
 class SELayer(nn.Module):
     def __init__(self,in_cahnnel, channel, reduction=16):
