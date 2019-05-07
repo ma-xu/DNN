@@ -1,5 +1,9 @@
 ## Results on CIFAR100
-The table prvoides the models and results of various models on CIFAR100
+The table prvoides the models and results of various models on CIFAR100. 
+Learning rate =0.1 and will be divided by 10 every 70 epochs. Total 300 epochs.
+Using SGD optimizer, momentum=0.9, weight_decay=5e-4.
+Loss is CrossEntropyLoss.
+Batch-size=512.
 
 Model | Parameters| Flops | CIFAR-100 | 
 -------|:-------:|:--------:|:--------:|
