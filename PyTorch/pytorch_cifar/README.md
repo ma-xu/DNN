@@ -14,7 +14,7 @@ Model | Parameters| Flops | CIFAR-100 |
 [SEResNet50]() |- |- |-
 [SEResNet101]() |- |- |-
 [PSEResNet18](https://drive.google.com/open?id=1ZHYAyjiVsBtpCe7pDp3Ip204UYDpe_aR) |- |- |74.97%
-[PSEResNet50]() |- |- |-
+[PSEResNet50](https://drive.google.com/open?id=1V_-qkfvGorDDzOMEsEb9peHyj-tI2IB2) |- |- |77.45%
 [PSEResNet101]() |- |- |-
 [CPSEResNet18](https://drive.google.com/open?id=12Hne8epBFV2YjakHP43PwYSYizdHlG0D) |- |- |75.25%
 [CPSEResNet50](https://drive.google.com/open?id=1axp5bjRTkmkxRd3CGRTP_WwBOcdh74GM) |- |- |77.43%
@@ -36,7 +36,7 @@ Model | 18-Layer| 50-Layer | 101-Layer |
 -------|:-------:|:--------:|:--------:|
 PreActResNet    |74.91% |77.39% |77.74%
 SEResNet        |75.19% |- |-
-PSEResNet       |74.97% |- |-
+PSEResNet       |74.97% |77.45% |-
 CPSEResNet      |75.25% |77.43% |77.61%
 SPPSEResNet     |75.41% |- |-
 PSPPSEResNet    |75.01% |- |-
