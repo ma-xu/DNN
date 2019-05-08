@@ -30,7 +30,7 @@ Model | Parameters| Flops | CIFAR-100 |
 [CPSPPSEResNet101]() |- |- |failed
 
 
-For a better understanding, we resize the table as follows:
+For a better understanding, we reschedule the table as follows:
 
 Model | 18-Layer| 50-Layer | 101-Layer | 
 -------|:-------:|:--------:|:--------:|
