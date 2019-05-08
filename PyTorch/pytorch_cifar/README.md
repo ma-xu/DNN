@@ -31,6 +31,7 @@ Model | Parameters| Flops | CIFAR-100 |
 
 
 For a better understanding, we resize the table as follows:
+
 Model | 18-Layer| 50-Layer | 101-Layer | 
 -------|:-------:|:--------:|:--------:|
 PreActResNet    |74.91% |77.39% |77.74%
