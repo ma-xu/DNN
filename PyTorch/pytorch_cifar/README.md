@@ -28,3 +28,15 @@ Model | Parameters| Flops | CIFAR-100 |
 [CPSPPSEResNet18](https://drive.google.com/open?id=1G1vPvLYFCTCq7nE4TQFTiwIthKFE9yso) |- |- |75.56%
 [CPSPPSEResNet50]() |- |- |-
 [CPSPPSEResNet101]() |- |- |failed
+
+
+For a better understanding, we resize the table as follows:
+Model | 18-Layer| 50-Layer | 101-Layer | 
+-------|:-------:|:--------:|:--------:|
+PreActResNet    |74.91% |77.39% |77.74%
+SEResNet        |75.19% |- |-
+PSEResNet       |74.97% |- |-
+CPSEResNet      |75.25% |77.43% |-
+SPPSEResNet     |75.41% |- |-
+PSPPSEResNet    |75.01% |- |-
+CPSPPSEResNet   |75.56% |- |-
