@@ -25,6 +25,6 @@ Model | Parameters| Flops | CIFAR-100 |
 [PSPPSEResNet18]() |- |- |-
 [PSPPSEResNet50]() |- |- |-
 [PSPPSEResNet101]() |- |- |-
-[CPSPPSEResNet18]() |- |- |-
+[CPSPPSEResNet18](https://drive.google.com/open?id=1G1vPvLYFCTCq7nE4TQFTiwIthKFE9yso) |- |- |75.560%
 [CPSPPSEResNet50]() |- |- |-
 [CPSPPSEResNet101]() |- |- |-
