@@ -7,8 +7,8 @@ Batch-size=512.
 
 Model | Parameters| Flops | CIFAR-100 | 
 -------|:-------:|:--------:|:--------:|
-[PreActResNet18](https://drive.google.com/open?id=1w2VGpFPDuS9NzcfcGfPUXoEdXwVftFep) |- |- |74.910%
-[PreActResNet50]() |- |- |-
+[PreActResNet18](https://drive.google.com/open?id=1w2VGpFPDuS9NzcfcGfPUXoEdXwVftFep) |- |- |74.91%
+[PreActResNet50](https://drive.google.com/open?id=1Nz_JmzLxuzefGzekBRoCutDIeRgaKWMY) |- |- |77.39%
 [PreActResNet101]() |- |- |-
 [SEResNet18]() |- |- |-
 [SEResNet50]() |- |- |-
@@ -16,7 +16,7 @@ Model | Parameters| Flops | CIFAR-100 |
 [PSEResNet18]() |- |- |-
 [PSEResNet50]() |- |- |-
 [PSEResNet101]() |- |- |-
-[CPSEResNet18](https://drive.google.com/open?id=12Hne8epBFV2YjakHP43PwYSYizdHlG0D) |- |- |75.250%
+[CPSEResNet18](https://drive.google.com/open?id=12Hne8epBFV2YjakHP43PwYSYizdHlG0D) |- |- |75.25%
 [CPSEResNet50]() |- |- |-
 [CPSEResNet101]() |- |- |-
 [SPPSEResNet18]() |- |- |-
@@ -25,6 +25,6 @@ Model | Parameters| Flops | CIFAR-100 |
 [PSPPSEResNet18]() |- |- |-
 [PSPPSEResNet50]() |- |- |-
 [PSPPSEResNet101]() |- |- |-
-[CPSPPSEResNet18](https://drive.google.com/open?id=1G1vPvLYFCTCq7nE4TQFTiwIthKFE9yso) |- |- |75.560%
+[CPSPPSEResNet18](https://drive.google.com/open?id=1G1vPvLYFCTCq7nE4TQFTiwIthKFE9yso) |- |- |75.56%
 [CPSPPSEResNet50]() |- |- |-
 [CPSPPSEResNet101]() |- |- |-
