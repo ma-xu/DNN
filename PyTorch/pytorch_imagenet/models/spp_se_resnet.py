@@ -8,6 +8,7 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
+__all__ = ['SPPSEResNet18', 'SPPSEResNet34', 'SPPSEResNet50', 'SPPSEResNet101', 'SPPSEResNet152']
 
 class SPPSELayer(nn.Module):
     def __init__(self, channel, reduction=16):
@@ -148,4 +149,4 @@ def test():
     print(y.size())
 
 
-# test()
+test()

@@ -9,6 +9,7 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
+__all__ = ['PSPPSEResNet18', 'PSPPSEResNet34', 'PSPPSEResNet50', 'PSPPSEResNet101', 'PSPPSEResNet152']
 
 class PSPPSELayer(nn.Module):
     def __init__(self,in_cahnnel, channel, reduction=16):

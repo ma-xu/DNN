@@ -1,48 +1,57 @@
-"""PSE-ResNet in PyTorch
-Pre-activated SE-ResNet
-Based on preact_resnet.py
+"""Convolution-preConnect-SPP SENET
 
 Author: Xu Ma.
-Date: Apr/17/2019
+Date: May/06/2019
 """
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
-__all__ = ['PSEResNet18', 'PSEResNet34', 'PSEResNet50', 'PSEResNet101', 'PSEResNet152']
+__all__ = ['CPSPPSEResNet18', 'CPSPPSEResNet34', 'CPSPPSEResNet50', 'CPSPPSEResNet101', 'CPSPPSEResNet152']
 
-
-class SELayer(nn.Module):
-    def __init__(self,in_cahnnel, channel, reduction=16):
-        super(SELayer, self).__init__()
-        self.avg_pool = nn.AdaptiveAvgPool2d(1)
+class CPSPPSELayer(nn.Module):
+    def __init__(self,in_channel, channel, reduction=16):
+        super(CPSPPSELayer, self).__init__()
+        if in_channel != channel:
+            self.conv1 = nn.Sequential(
+                nn.Conv2d(in_channel, channel, kernel_size=1, stride=1, bias=False),
+                nn.BatchNorm2d(channel),
+                nn.ReLU(inplace=True)
+            )
+        self.avg_pool1 = nn.AdaptiveAvgPool2d(1)
+        self.avg_pool2 = nn.AdaptiveAvgPool2d(2)
+        self.avg_pool4 = nn.AdaptiveAvgPool2d(4)
         self.fc = nn.Sequential(
-            nn.Linear(in_cahnnel, in_cahnnel // reduction, bias=False),
+            nn.Linear(channel*21, channel // reduction, bias=False),
             nn.ReLU(inplace=True),
-            nn.Linear(in_cahnnel // reduction, channel, bias=False),
+            nn.Linear(channel // reduction, channel, bias=False),
             nn.Sigmoid()
         )
 
     def forward(self, x):
-        b, c, _, _ = x.size() # b: number; c: channel;
-        y = self.avg_pool(x).view(b, c) #like resize() in numpy
+        y = self.conv1(x) if hasattr(self, 'conv1') else x
+        b, c, _, _ = y.size() # b: number; c: channel;
+        y1 = self.avg_pool1(y).view(b, c)  # like resize() in numpy
+        y2 = self.avg_pool2(y).view(b, 4 * c)
+        y3 = self.avg_pool4(y).view(b, 16 * c)
+        y = torch.cat((y1, y2, y3), 1)
         y = self.fc(y)
         b,out_channel = y.size()
         y = y.view(b, out_channel, 1, 1)
         return y
 
 
-class PSEPreActBlock(nn.Module):
+class CPSPPSEPreActBlock(nn.Module):
     """SE pre-activation of the BasicBlock"""
     expansion = 1 # last_block_channel/first_block_channel
 
     def __init__(self,in_planes,planes,stride=1,reduction=16):
-        super(PSEPreActBlock, self).__init__()
+        super(CPSPPSEPreActBlock, self).__init__()
         self.bn1 = nn.BatchNorm2d(in_planes)
         self.conv1 = nn.Conv2d(in_planes,planes,kernel_size=3,stride=stride,padding=1,bias=False)
         self.bn2 = nn.BatchNorm2d(planes)
         self.conv2 = nn.Conv2d(planes,planes,kernel_size=3,stride=1,padding=1,bias=False)
-        self.se = SELayer(in_cahnnel=in_planes,channel=self.expansion*planes,reduction=reduction)
+        self.se = CPSPPSELayer(in_channel=in_planes,channel=self.expansion*planes,reduction=reduction)
         if stride !=1 or in_planes!=self.expansion*planes:
             self.shortcut = nn.Sequential(
                 nn.Conv2d(in_planes,self.expansion*planes,kernel_size=1,stride=stride,bias=False)
@@ -59,12 +68,12 @@ class PSEPreActBlock(nn.Module):
         return out
 
 
-class PSEPreActBootleneck(nn.Module):
+class CPSPPSEPreActBootleneck(nn.Module):
     """Pre-activation version of the bottleneck module"""
     expansion = 4 # last_block_channel/first_block_channel
 
     def __init__(self,in_planes,planes,stride=1,reduction=16):
-        super(PSEPreActBootleneck, self).__init__()
+        super(CPSPPSEPreActBootleneck, self).__init__()
         self.bn1 = nn.BatchNorm2d(in_planes)
         self.conv1=nn.Conv2d(in_planes,planes,kernel_size=1,bias=False)
         self.bn2 = nn.BatchNorm2d(planes)
@@ -72,7 +81,7 @@ class PSEPreActBootleneck(nn.Module):
         self.bn3 = nn.BatchNorm2d(planes)
         self.conv3 = nn.Conv2d(planes,self.expansion*planes,kernel_size=1,bias=False)
         #self.se = SELayer(self.expansion*planes, reduction)
-        self.se = SELayer(in_cahnnel=in_planes, channel=self.expansion * planes, reduction=reduction)
+        self.se = CPSPPSELayer(in_channel=in_planes, channel=self.expansion * planes, reduction=reduction)
         if stride != 1 or in_planes != self.expansion * planes:
             self.shortcut = nn.Sequential(
                 nn.Conv2d(in_planes, self.expansion * planes, kernel_size=1, stride=stride, bias=False)
@@ -90,9 +99,9 @@ class PSEPreActBootleneck(nn.Module):
         return out
 
 
-class PSEResNet(nn.Module):
+class CPSPPSEResNet(nn.Module):
     def __init__(self,block,num_blocks,num_classes=1000,reduction=16):
-        super(PSEResNet, self).__init__()
+        super(CPSPPSEResNet, self).__init__()
         self.in_planes=64
         self.conv1 = nn.Conv2d(3,64,kernel_size=3,stride=1,padding=1,bias=False)
         self.layer1 = self._make_layer(block, 64, num_blocks[0], stride=1,reduction=reduction)
@@ -122,30 +131,30 @@ class PSEResNet(nn.Module):
         return out
 
 
-def PSEResNet18(num_classes=1000):
-    return PSEResNet(PSEPreActBlock, [2,2,2,2],num_classes)
+def CPSPPSEResNet18(num_classes=1000):
+    return CPSPPSEResNet(CPSPPSEPreActBlock, [2,2,2,2],num_classes)
 
 
-def PSEResNet34(num_classes=1000):
-    return PSEResNet(PSEPreActBlock, [3,4,6,3],num_classes)
+def CPSPPSEResNet34(num_classes=1000):
+    return CPSPPSEResNet(CPSPPSEPreActBlock, [3,4,6,3],num_classes)
 
 
-def PSEResNet50(num_classes=1000):
-    return PSEResNet(PSEPreActBootleneck, [3,4,6,3],num_classes)
+def CPSPPSEResNet50(num_classes=1000):
+    return CPSPPSEResNet(CPSPPSEPreActBootleneck, [3,4,6,3],num_classes)
 
 
-def PSEResNet101(num_classes=1000):
-    return PSEResNet(PSEPreActBootleneck, [3,4,23,3],num_classes)
+def CPSPPSEResNet101(num_classes=1000):
+    return CPSPPSEResNet(CPSPPSEPreActBootleneck, [3,4,23,3],num_classes)
 
 
-def PSEResNet152(num_classes=1000):
-    return PSEResNet(PSEPreActBootleneck, [3,8,36,3],num_classes)
+def CPSPPSEResNet152(num_classes=1000):
+    return CPSPPSEResNet(CPSPPSEPreActBootleneck, [3,8,36,3],num_classes)
 
 
 def test():
-    net = PSEResNet18()
+    net = CPSPPSEResNet152()
     y = net((torch.randn(1,3,32,32)))
     print(y.size())
 
 
-# test()
+#test()
