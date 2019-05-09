@@ -18,8 +18,13 @@ import os
 import argparse
 
 from imagenetLoad import ImageNetDownSample
-from models import *
+import models as models
 from utils import *
+
+model_names = sorted(name for name in models.__dict__
+    if not name.startswith("__")
+    and callable(models.__dict__[name]))
+print(model_names)
 
 os.environ["HDF5_USE_FILE_LOCKING"] = "FALSE"
 os.environ["CUDA_VISIBLE_DEVICES"] = "0,1,2,3"
@@ -28,15 +33,17 @@ parser.add_argument('--lr', default=0.1, type=float, help='learning rate')
 parser.add_argument('--resume', '-r',default=False, action='store_true', help='resume from checkpoint')
 parser.add_argument('--netName', default='PreActResNet18', type=str, help='choosing network')
 parser.add_argument('--bs', default=512, type=int, help='batch size')
-parser.add_argument('--es', default=300, type=int, help='epoch size')
+parser.add_argument('--es', default=100, type=int, help='epoch size')
 parser.add_argument('--imagenet', default=1000, type=int, help='dataset classes number')
 parser.add_argument('--datapath', default='/home/xm0036/Datasets/ImageNet32', type=str, help='dataset path')
 args = parser.parse_args()
+print(args.netName)
 
 
 device = 'cuda' if torch.cuda.is_available() else 'cpu'
 print(device)
 best_acc = 0  # best test accuracy
+best_acc5 = 0
 start_epoch = 0  # start from epoch 0 or last checkpoint epoch
 
 
@@ -64,18 +71,10 @@ testloader = torch.utils.data.DataLoader(testset, batch_size=args.bs, shuffle=Fa
 
 # Model
 print('==> Building model..')
-# More models are avaliable in models folder
-if args.netName=='PreActResNet18': net = PreActResNet18(num_classes=args.imagenet)
-elif args.netName=='SEResNet18': net = SEResNet18(num_classes=args.imagenet)
-elif args.netName=='SEResNet34': net = SEResNet34(num_classes=args.imagenet)
-elif args.netName=='PSEResNet18': net = PSEResNet18(num_classes=args.imagenet)
-elif args.netName=='SPPSEResNet18': net = SPPSEResNet18(num_classes=args.imagenet)
-elif args.netName=='PSPPSEResNet18': net = PSPPSEResNet18(num_classes=args.imagenet)
-else:
-    args.netName = PreActResNet18
-    net = PreActResNet18()
-    print("\n=====NOTICING:=======\n")
-    print("=====Not a valid netName, using default PreActResNet18=====\n\n")
+try:
+    net = models.__dict__[args.netName](num_classes=args.imagenet)
+except:
+    net = models.__dict__[args.netName]()
 
 para_numbers = count_parameters(net)
 print("Total parameters number is: "+ str(para_numbers))
@@ -109,6 +108,8 @@ def train(epoch):
     net.train()
     train_loss = 0
     correct = 0
+    correct_1 = 0
+    correct_5 = 0
     total = 0
 
 
@@ -122,23 +123,33 @@ def train(epoch):
         optimizer.step()
 
         train_loss += loss.item()
-        _, predicted = outputs.max(1)
+        _, predicted = outputs.topk(5, 1, True, True)
         total += targets.size(0)
-        correct += predicted.eq(targets).sum().item()
+        predicted = predicted.t()
+        correct = predicted.eq(targets.view(1, -1).expand_as(predicted))
+        correct_1_batch = correct[:1].view(-1).float().sum(0, keepdim=True)
+        correct_1 += float(correct_1_batch)
+        correct_5_batch = correct[:5].view(-1).float().sum(0, keepdim=True)
+        correct_5 += float(correct_5_batch)
+
 
         progress_bar(batch_idx, len(trainloader), 'Loss: %.3f | Acc: %.3f%% (%d/%d)'
-            % (train_loss/(batch_idx+1), 100.*correct/total, correct, total))
+            % (train_loss/(batch_idx+1), 100.*correct_1/total, correct_1, total))
 
     file_path='records/imagenet32_' +args.netName+'_train.txt'
-    record_str=str(epoch)+'\t'+"%.3f"%(train_loss/(batch_idx+1))+'\t'+"%.3f"%(100.*correct/total)+'\n'
+    record_str=str(epoch)+'\t'+"%.3f"%(train_loss/(batch_idx+1))+'\t'+\
+               "%.3f"%(100.*correct_1/total)+'\t'+"%.3f"%(100.*correct_5/total)+'\n'
     write_record(file_path,record_str)
 
 
 def test(epoch):
     global best_acc
+    global best_acc5
     net.eval()
     test_loss = 0
     correct = 0
+    correct_1 = 0
+    correct_5 = 0
     total = 0
     with torch.no_grad():
         for batch_idx, (inputs, targets) in enumerate(testloader):
@@ -147,20 +158,25 @@ def test(epoch):
             loss = criterion(outputs, targets)
 
             test_loss += loss.item()
-            _, predicted = outputs.max(1)
+            _, predicted = outputs.topk(5, 1, True, True)
             total += targets.size(0)
-            correct += predicted.eq(targets).sum().item()
+            predicted = predicted.t()
+            correct = predicted.eq(targets.view(1, -1).expand_as(predicted))
+            correct_1_batch = correct[:1].view(-1).float().sum(0, keepdim=True)
+            correct_1 += float(correct_1_batch)
+            correct_5_batch = correct[:5].view(-1).float().sum(0, keepdim=True)
+            correct_5 += float(correct_5_batch)
 
             progress_bar(batch_idx, len(testloader), 'Loss: %.3f | Acc: %.3f%% (%d/%d)'
-                % (test_loss/(batch_idx+1), 100.*correct/total, correct, total))
+                % (test_loss/(batch_idx+1), 100.*correct_1/total, correct_1, total))
 
     file_path = 'records/imagenet32_' +args.netName+ '_test.txt'
     record_str = str(epoch) + '\t' + "%.3f" % (test_loss / (batch_idx + 1)) + '\t' + "%.3f" % (
-                100. * correct / total) + '\n'
+            100. * correct_1 / total) + '\t' + "%.3f" % (100. * correct_5 / total) + '\n'
     write_record(file_path, record_str)
 
     # Save checkpoint.
-    acc = 100.*correct/total
+    acc = 100.*correct_1/total
     if acc > best_acc:
         print('Saving..')
         state = {
@@ -173,7 +189,7 @@ def test(epoch):
         save_path = './checkpoint/ckpt_imagenet32_' + args.netName + '.t7'
         torch.save(state, save_path)
         best_acc = acc
-
+        best_acc5=100.*correct_5/total
 
 for epoch in range(start_epoch, start_epoch+args.es):
     train(epoch)
@@ -191,6 +207,8 @@ statis_str+='\n===========\nargs:\n'
 statis_str+=args.__str__()
 statis_str+='\n==================\n'
 statis_str+="BEST_accuracy: "+str(best_acc)
+statis_str+='\n==================\n'
+statis_str+="Accroding top5 accuracy: "+str(best_acc5)
 statis_str+='\n==================\n'
 statis_str+="Total parameters: "+str(para_numbers)
 f.write(statis_str)
