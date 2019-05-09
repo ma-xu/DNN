@@ -40,4 +40,4 @@ PSEResNet       |74.97% |77.45% |77.88%
 CPSEResNet      |75.25% |77.43% |77.61%
 SPPSEResNet     |75.41% |`78.21%`|78.11%
 PSPPSEResNet    |75.01% |78.11% |78.35%
-CPSPPSEResNet   |`75.56%`|77.95% |-
+CPSPPSEResNet   |`75.56%`|77.95% |`79.16%+`
