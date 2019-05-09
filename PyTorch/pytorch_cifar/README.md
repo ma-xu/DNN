@@ -24,7 +24,7 @@ Model | Parameters| Flops | CIFAR-100 |
 [SPPSEResNet101]() |- |- |-
 [PSPPSEResNet18](https://drive.google.com/open?id=1h-d4b1qaGgzxu8_yPlwrVu-BIN9ZUbNo) |- |- |75.01%
 [PSPPSEResNet50](https://drive.google.com/open?id=11-4nxqOE9_cYwC6iR8DUHSln0z5nwoTD) |- |- |78.11%
-[PSPPSEResNet101]() |- |- |-
+[PSPPSEResNet101](https://drive.google.com/open?id=134ZG8H0TY545MArhon1A8YKEZcOrPB9y) |- |- |78.35%
 [CPSPPSEResNet18](https://drive.google.com/open?id=1G1vPvLYFCTCq7nE4TQFTiwIthKFE9yso) |- |- |75.56%
 [CPSPPSEResNet50](https://drive.google.com/open?id=1tVB-ml5JUnmGMqw7mToPxhmkjoaCkRE2) |- |- |77.95%
 [CPSPPSEResNet101]() |- |- |failed
@@ -39,5 +39,5 @@ SEResNet        |75.19% |77.91% |78.03%
 PSEResNet       |74.97% |77.45% |77.88%
 CPSEResNet      |75.25% |77.43% |77.61%
 SPPSEResNet     |75.41% |78.21% |-
-PSPPSEResNet    |75.01% |78.11% |-
+PSPPSEResNet    |75.01% |78.11% |78.35%
 CPSPPSEResNet   |75.56% |77.95% |-
