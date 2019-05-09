@@ -21,7 +21,7 @@ Model | Parameters| Flops | CIFAR-100 |
 [CPSEResNet101](https://drive.google.com/open?id=1MtfiV8vjHNfiXwB6q-AncuTe2Y1dkNxQ) |- |- |77.61%
 [SPPSEResNet18](https://drive.google.com/open?id=1EYcqDd70KHLKC2v_DaZ35qW1SLVzwaqN) |- |- |75.41%
 [SPPSEResNet50](https://drive.google.com/open?id=1xEMjxxOe3X3-fOvU9wdxJWtoPoFA74T_) |- | |78.21%
-[SPPSEResNet101]() |- |- |-
+[SPPSEResNet101](https://drive.google.com/open?id=1H5gpBjWSnf4RbaZg2tdJ5LJRMTSLCxgP) |- |- |78.11
 [PSPPSEResNet18](https://drive.google.com/open?id=1h-d4b1qaGgzxu8_yPlwrVu-BIN9ZUbNo) |- |- |75.01%
 [PSPPSEResNet50](https://drive.google.com/open?id=11-4nxqOE9_cYwC6iR8DUHSln0z5nwoTD) |- |- |78.11%
 [PSPPSEResNet101](https://drive.google.com/open?id=134ZG8H0TY545MArhon1A8YKEZcOrPB9y) |- |- |78.35%
@@ -38,6 +38,6 @@ PreActResNet    |74.91% |77.39% |77.74%
 SEResNet        |75.19% |77.91% |78.03%
 PSEResNet       |74.97% |77.45% |77.88%
 CPSEResNet      |75.25% |77.43% |77.61%
-SPPSEResNet     |75.41% |78.21% |-
+SPPSEResNet     |75.41% |78.21% |78.11%
 PSPPSEResNet    |75.01% |78.11% |78.35%
 CPSPPSEResNet   |75.56% |77.95% |-
