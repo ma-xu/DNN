@@ -15,12 +15,12 @@ Model | Parameters| Flops | CIFAR-100 |
 [SEResNet101]() |- |- |-
 [PSEResNet18](https://drive.google.com/open?id=1ZHYAyjiVsBtpCe7pDp3Ip204UYDpe_aR) |- |- |74.97%
 [PSEResNet50](https://drive.google.com/open?id=1V_-qkfvGorDDzOMEsEb9peHyj-tI2IB2) |- |- |77.45%
-[PSEResNet101]() |- |- |-
+[PSEResNet101](https://drive.google.com/open?id=17zRZipc8Dj32b4iaDcD4J9w-8-tcEfqb) |- |- |77.88%
 [CPSEResNet18](https://drive.google.com/open?id=12Hne8epBFV2YjakHP43PwYSYizdHlG0D) |- |- |75.25%
 [CPSEResNet50](https://drive.google.com/open?id=1axp5bjRTkmkxRd3CGRTP_WwBOcdh74GM) |- |- |77.43%
 [CPSEResNet101](https://drive.google.com/open?id=1MtfiV8vjHNfiXwB6q-AncuTe2Y1dkNxQ) |- |- |77.61%
 [SPPSEResNet18](https://drive.google.com/open?id=1EYcqDd70KHLKC2v_DaZ35qW1SLVzwaqN) |- |- |75.41%
-[SPPSEResNet50]() |- | |-
+[SPPSEResNet50](https://drive.google.com/open?id=1xEMjxxOe3X3-fOvU9wdxJWtoPoFA74T_) |- | |78.21%
 [SPPSEResNet101]() |- |- |-
 [PSPPSEResNet18](https://drive.google.com/open?id=1h-d4b1qaGgzxu8_yPlwrVu-BIN9ZUbNo) |- |- |75.01%
 [PSPPSEResNet50](https://drive.google.com/open?id=11-4nxqOE9_cYwC6iR8DUHSln0z5nwoTD) |- |- |78.11%
@@ -36,8 +36,8 @@ Model | 18-Layer| 50-Layer | 101-Layer |
 -------|:-------:|:--------:|:--------:|
 PreActResNet    |74.91% |77.39% |77.74%
 SEResNet        |75.19% |77.91% |-
-PSEResNet       |74.97% |77.45% |-
+PSEResNet       |74.97% |77.45% |77.88%
 CPSEResNet      |75.25% |77.43% |77.61%
-SPPSEResNet     |75.41% |- |-
+SPPSEResNet     |75.41% |78.21% |-
 PSPPSEResNet    |75.01% |78.11% |-
 CPSPPSEResNet   |75.56% |77.95% |-
