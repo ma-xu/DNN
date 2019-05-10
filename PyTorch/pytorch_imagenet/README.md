@@ -14,7 +14,7 @@ Model | Parameters| Flops | Downsampled ImageNet (Top1) | Downsampled ImageNet (
 [SEResNet18]() |- |- |-|-
 [SEResNet50]() |- |- |-|-
 [SEResNet101]() |- |- |-|-
-[PSEResNet18]() |- |- |-|-
+[PSEResNet18](https://drive.google.com/open?id=1_QsG2t2i7HXmzKr7eJonrjeNU2NQlgeu) |- |- |53.754%|77.412%
 [PSEResNet50]() |- |- |-|-
 [PSEResNet101]() |- |- |-|-
 [CPSEResNet18]() |- |- |-|-
@@ -37,7 +37,7 @@ Model | 18-Layer| 50-Layer | 101-Layer |
 -------|:-------:|:--------:|:--------:|
 PreActResNet    |53.632%|-|-
 SEResNet        |-|-|-
-PSEResNet       |-|-|-
+PSEResNet       |53.754%|-|-
 CPSEResNet      |-|-|-
 SPPSEResNet     |-|-|-
 PSPPSEResNet    |-|-|-
