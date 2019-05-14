@@ -41,5 +41,5 @@ PSEResNet       |53.754%|59.316%|-
 CPSEResNet      |53.668%|-|-
 SPPSEResNet     |54.502%|-|-
 PSPPSEResNet    |54.236%|-|-
-CPSPPSEResNet   |54.644|-|-
+CPSPPSEResNet   |54.644%|-|-
 
