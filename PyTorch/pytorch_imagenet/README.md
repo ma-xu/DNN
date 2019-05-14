@@ -26,7 +26,7 @@ Model | Parameters| Flops | Downsampled ImageNet (Top1) | Downsampled ImageNet (
 [PSPPSEResNet18](https://drive.google.com/open?id=19FQVn33fdptmPfbxViS7MZw1pMDksTI5) |- |- |54.236%|78.026
 [PSPPSEResNet50]() |- |- |-|-
 [PSPPSEResNet101]() |- |- |-|-
-[CPSPPSEResNet18]() |- |- |-|-
+[CPSPPSEResNet18](https://drive.google.com/open?id=1z1mgRmTWLb1NZ6ojWd_gvO_kwoWsro1-) |- |- |54.644%|78.430%
 [CPSPPSEResNet50]() |- |- |-|-
 [CPSPPSEResNet101]() |- |- |-|-
 
@@ -41,5 +41,5 @@ PSEResNet       |53.754%|59.316%|-
 CPSEResNet      |53.668%|-|-
 SPPSEResNet     |54.502%|-|-
 PSPPSEResNet    |54.236%|-|-
-CPSPPSEResNet   |-|-|-
+CPSPPSEResNet   |54.644|-|-
 
