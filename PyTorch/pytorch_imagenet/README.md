@@ -21,7 +21,7 @@ Model | Parameters| Flops | Downsampled ImageNet (Top1) | Downsampled ImageNet (
 [CPSEResNet50](https://drive.google.com/open?id=1wEuueaBzJCoNCG92WI5ld3CfnFGGXAoB) |- |- |59.132%|81.648%
 [CPSEResNet101]() |- |- |-|-
 [SPPSEResNet18](https://drive.google.com/open?id=1qRT3s8bNoMBtYe5EVQjYeqkj76XF8SSr) |- |- |54.502%|78.184%
-[SPPSEResNet50]() |- |-|-|-
+[SPPSEResNet50]() |- |-|61.304%|83.396%
 [SPPSEResNet101]() |- |- |-|-
 [PSPPSEResNet18](https://drive.google.com/open?id=19FQVn33fdptmPfbxViS7MZw1pMDksTI5) |- |- |54.236%|78.026
 [PSPPSEResNet50]() |- |- |-|-
@@ -39,7 +39,7 @@ PreActResNet    |53.632%|60.434%|61.860%
 SEResNet        |53.526%|59.414%|-
 PSEResNet       |53.754%|59.316%|-
 CPSEResNet      |53.668%|59.132%|-
-SPPSEResNet     |54.502%|-|-
+SPPSEResNet     |54.502%|61.304%|-
 PSPPSEResNet    |54.236%|-|-
 CPSPPSEResNet   |54.644%|-|-
 
