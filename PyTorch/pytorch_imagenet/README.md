@@ -13,7 +13,7 @@ Model | Parameters| Flops | Downsampled ImageNet (Top1) | Downsampled ImageNet (
 [PreActResNet101](https://drive.google.com/open?id=18Zx1UHfxGExXkRE9RxcdQKaiHm1SeoRH) |- |- |61.860%|83.522%
 [SEResNet18](https://drive.google.com/open?id=1c5cULBL9NT17buv0oETmUaLvE1volIV4) |- |- |53.526%|77.424%
 [SEResNet50](https://drive.google.com/open?id=1m2Cz7PfxRh5nMabAL4FB0WdL6r1vYIYZ) |- |- |59.414%|81.716%
-[SEResNet101]() |- |- |-|-
+[SEResNet101]() |- |- |60.928%|82.862%
 [PSEResNet18](https://drive.google.com/open?id=1_QsG2t2i7HXmzKr7eJonrjeNU2NQlgeu) |- |- |53.754%|77.412%
 [PSEResNet50](https://drive.google.com/open?id=1Jum6qH1bf8KWnqVwoURLyoI86s73dxMj) |- |- |59.316%|81.652%
 [PSEResNet101]() |- |- |-|-
@@ -36,7 +36,7 @@ For a better understanding, we reschedule the table as follows (the performance 
 Model | 18-Layer| 50-Layer | 101-Layer | 
 -------|:-------:|:--------:|:--------:|
 PreActResNet    |53.632%|60.434%|61.860%
-SEResNet        |53.526%|59.414%|-
+SEResNet        |53.526%|59.414%|60.928%
 PSEResNet       |53.754%|59.316%|-
 CPSEResNet      |53.668%|59.132%|-
 SPPSEResNet     |54.502%|61.304%|-
