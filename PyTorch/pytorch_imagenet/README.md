@@ -22,12 +22,12 @@ Model | Parameters| Flops | Downsampled ImageNet (Top1) | Downsampled ImageNet (
 [CPSEResNet101](https://drive.google.com/open?id=1yUwPoh4vfkZVejCnIVvdd6SBTMnO6h0J) |- |- |60.826%|82.628%
 [SPPSEResNet18](https://drive.google.com/open?id=1qRT3s8bNoMBtYe5EVQjYeqkj76XF8SSr) |- |- |54.502%|78.184%
 [SPPSEResNet50](https://drive.google.com/open?id=1MBQZ1LUDYb7AHP7f7okTt6gHjquDoqMe) |- |-|61.304%|83.396%
-[SPPSEResNet101]() |- |- |-|-
+[SPPSEResNet101](https://drive.google.com/open?id=1CQMdIL3eqNel7X8J7EXPZBdB0rIJ7qni) |- |- | 62.672%|84.122%
 [PSPPSEResNet18](https://drive.google.com/open?id=19FQVn33fdptmPfbxViS7MZw1pMDksTI5) |- |- |54.236%|78.026
 [PSPPSEResNet50](https://drive.google.com/open?id=1M4Kf2Y6dooX-T9JXWMTowIIdN6EeVEWe) |- |- |61.364%|83.514%
 [PSPPSEResNet101]() |- |- |-|-
 [CPSPPSEResNet18](https://drive.google.com/open?id=1z1mgRmTWLb1NZ6ojWd_gvO_kwoWsro1-) |- |- |54.644%|78.430%
-[CPSPPSEResNet50]() |- |- |-|-
+[CPSPPSEResNet50](https://drive.google.com/open?id=1beaQwpv5UwGPK8VO22eKUVVsWx5Dlcd6) |- |- |61.476%|83.502%
 [CPSPPSEResNet101]() |- |- |-|-
 
 
@@ -41,5 +41,5 @@ PSEResNet       |53.754%|59.316%|60.922%
 CPSEResNet      |53.668%|59.132%|60.826%
 SPPSEResNet     |54.502%|61.304%|62.672%
 PSPPSEResNet    |54.236%|61.364%|<sub>62.634%(61 epoch)</sub>
-CPSPPSEResNet   |54.644%|-|-
+CPSPPSEResNet   |54.644%|61.476%|-
 
