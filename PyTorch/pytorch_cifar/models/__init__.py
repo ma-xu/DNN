@@ -39,3 +39,8 @@ from .psppse_mobilenetv2 import *
 from .cpsppse_mobilenetv2 import *
 
 # resNext
+from .resnext import *
+from .se_resnext import *
+from .sppse_resnext import *
+from .psppse_resnext import *
+from .cpsppse_resnext import *
