@@ -100,7 +100,7 @@ def dense(num_classes=100):
     return DenseNet(Bottleneck, [6,12,24,16], growth_rate=12,num_classes=num_classes)
 
 def test():
-    net = dense(num_classes=10)
+    net = dense(num_classes=100)
     x = torch.randn(1,3,32,32)
     y = net(x)
     print(y.shape)

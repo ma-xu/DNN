@@ -7,7 +7,31 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
-__all__=['MobileNetV2']
+__all__ =['SPPSEMobileNetV2']
+
+
+class SPPSELayer(nn.Module):
+    def __init__(self, channel, reduction=16):
+        super(SPPSELayer, self).__init__()
+        self.avg_pool1 = nn.AdaptiveAvgPool2d(1)
+        self.avg_pool2 = nn.AdaptiveAvgPool2d(2)
+        self.avg_pool4 = nn.AdaptiveAvgPool2d(4)
+        self.fc = nn.Sequential(
+            nn.Linear(channel * 21, channel // reduction, bias=False),
+            nn.ReLU(inplace=True),
+            nn.Linear(channel // reduction, channel, bias=False),
+            nn.Sigmoid()
+        )
+
+    def forward(self, x):
+        b, c, _, _ = x.size()
+        y1 = self.avg_pool1(x).view(b, c)  # like resize() in numpy
+        y2 = self.avg_pool2(x).view(b, 4 * c)
+        y3 = self.avg_pool4(x).view(b, 16 * c)
+        y = torch.cat((y1, y2, y3), 1)
+        y = self.fc(y).view(b, c, 1, 1)
+        return x * y.expand_as(x)
+
 class Block(nn.Module):
     '''expand + depthwise + pointwise'''
     def __init__(self, in_planes, out_planes, expansion, stride):
@@ -22,6 +46,8 @@ class Block(nn.Module):
         self.conv3 = nn.Conv2d(planes, out_planes, kernel_size=1, stride=1, padding=0, bias=False)
         self.bn3 = nn.BatchNorm2d(out_planes)
 
+        self.se = SPPSELayer(out_planes)
+
         self.shortcut = nn.Sequential()
         if stride == 1 and in_planes != out_planes:
             self.shortcut = nn.Sequential(
@@ -33,11 +59,12 @@ class Block(nn.Module):
         out = F.relu(self.bn1(self.conv1(x)))
         out = F.relu(self.bn2(self.conv2(out)))
         out = self.bn3(self.conv3(out))
+        out = self.se(out)
         out = out + self.shortcut(x) if self.stride==1 else out
         return out
 
 
-class MobileNetV2(nn.Module):
+class SPPSEMobileNetV2(nn.Module):
     # (expansion, out_planes, num_blocks, stride)
     cfg = [(1,  16, 1, 1),
            (6,  24, 2, 1),  # NOTE: change stride 2 -> 1 for CIFAR10
@@ -48,7 +75,7 @@ class MobileNetV2(nn.Module):
            (6, 320, 1, 1)]
 
     def __init__(self, num_classes=10):
-        super(MobileNetV2, self).__init__()
+        super(SPPSEMobileNetV2, self).__init__()
         # NOTE: change conv1 stride 2 -> 1 for CIFAR10
         self.conv1 = nn.Conv2d(3, 32, kernel_size=3, stride=1, padding=1, bias=False)
         self.bn1 = nn.BatchNorm2d(32)
@@ -78,9 +105,9 @@ class MobileNetV2(nn.Module):
 
 
 def test():
-    net = MobileNetV2(num_classes=100)
+    net = SPPSEMobileNetV2(num_classes=100)
     x = torch.randn(2,3,32,32)
     y = net(x)
     print(y.size())
 
-# test()
+test()

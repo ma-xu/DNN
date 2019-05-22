@@ -7,7 +7,41 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
-__all__=['MobileNetV2']
+__all__ =['CPSPPSEMobileNetV2']
+
+
+class CPSPPSELayer(nn.Module):
+    def __init__(self,in_channel, channel, reduction=16):
+        super(CPSPPSELayer, self).__init__()
+        if in_channel != channel:
+            self.conv1 = nn.Sequential(
+                nn.Conv2d(in_channel, channel, kernel_size=1, stride=1, bias=False),
+                nn.BatchNorm2d(channel),
+                nn.ReLU(inplace=True)
+            )
+        self.avg_pool1 = nn.AdaptiveAvgPool2d(1)
+        self.avg_pool2 = nn.AdaptiveAvgPool2d(2)
+        self.avg_pool4 = nn.AdaptiveAvgPool2d(4)
+        self.fc = nn.Sequential(
+            nn.Linear(channel*21, channel // reduction, bias=False),
+            nn.ReLU(inplace=True),
+            nn.Linear(channel // reduction, channel, bias=False),
+            nn.Sigmoid()
+        )
+
+    def forward(self, x):
+        x = self.conv1(x) if hasattr(self, 'conv1') else x
+        b, c, _, _ = x.size() # b: number; c: channel;
+        y1 = self.avg_pool1(x).view(b, c)  # like resize() in numpy
+        y2 = self.avg_pool2(x).view(b, 4 * c)
+        y3 = self.avg_pool4(x).view(b, 16 * c)
+        y = torch.cat((y1, y2, y3), 1)
+        y = self.fc(y)
+        b,out_channel = y.size()
+        y = y.view(b, out_channel, 1, 1)
+        return y
+
+
 class Block(nn.Module):
     '''expand + depthwise + pointwise'''
     def __init__(self, in_planes, out_planes, expansion, stride):
@@ -22,6 +56,8 @@ class Block(nn.Module):
         self.conv3 = nn.Conv2d(planes, out_planes, kernel_size=1, stride=1, padding=0, bias=False)
         self.bn3 = nn.BatchNorm2d(out_planes)
 
+        self.se = CPSPPSELayer(in_planes,out_planes)
+
         self.shortcut = nn.Sequential()
         if stride == 1 and in_planes != out_planes:
             self.shortcut = nn.Sequential(
@@ -30,14 +66,16 @@ class Block(nn.Module):
             )
 
     def forward(self, x):
+        PSPPSE = self.se(x)
         out = F.relu(self.bn1(self.conv1(x)))
         out = F.relu(self.bn2(self.conv2(out)))
         out = self.bn3(self.conv3(out))
+        out = out * PSPPSE.expand_as(out)
         out = out + self.shortcut(x) if self.stride==1 else out
         return out
 
 
-class MobileNetV2(nn.Module):
+class CPSPPSEMobileNetV2(nn.Module):
     # (expansion, out_planes, num_blocks, stride)
     cfg = [(1,  16, 1, 1),
            (6,  24, 2, 1),  # NOTE: change stride 2 -> 1 for CIFAR10
@@ -48,7 +86,7 @@ class MobileNetV2(nn.Module):
            (6, 320, 1, 1)]
 
     def __init__(self, num_classes=10):
-        super(MobileNetV2, self).__init__()
+        super(CPSPPSEMobileNetV2, self).__init__()
         # NOTE: change conv1 stride 2 -> 1 for CIFAR10
         self.conv1 = nn.Conv2d(3, 32, kernel_size=3, stride=1, padding=1, bias=False)
         self.bn1 = nn.BatchNorm2d(32)
@@ -78,7 +116,7 @@ class MobileNetV2(nn.Module):
 
 
 def test():
-    net = MobileNetV2(num_classes=100)
+    net = CPSPPSEMobileNetV2(num_classes=100)
     x = torch.randn(2,3,32,32)
     y = net(x)
     print(y.size())
