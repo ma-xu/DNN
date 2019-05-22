@@ -5,7 +5,29 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
-__all__=['dense']
+__all__=['sppse_dense']
+class SPPSELayer(nn.Module):
+    def __init__(self, channel, reduction=16):
+        super(SPPSELayer, self).__init__()
+        self.avg_pool1 = nn.AdaptiveAvgPool2d(1)
+        self.avg_pool2 = nn.AdaptiveAvgPool2d(2)
+        self.avg_pool4 = nn.AdaptiveAvgPool2d(4)
+        self.fc = nn.Sequential(
+            nn.Linear(channel*21, channel*21 // reduction, bias=False),
+            nn.ReLU(inplace=True),
+            nn.Linear(channel*21 // reduction, channel, bias=False),
+            nn.Sigmoid()
+        )
+
+    def forward(self, x):
+        b, c, _, _ = x.size()
+        y1 = self.avg_pool1(x).view(b, c)  # like resize() in numpy
+        y2 = self.avg_pool2(x).view(b, 4 * c)
+        y3 = self.avg_pool4(x).view(b, 16 * c)
+        y = torch.cat((y1, y2, y3), 1)
+        y = self.fc(y).view(b, c, 1, 1)
+        return x * y.expand_as(x)
+
 
 class Bottleneck(nn.Module):
     def __init__(self, in_planes, growth_rate):
@@ -14,10 +36,12 @@ class Bottleneck(nn.Module):
         self.conv1 = nn.Conv2d(in_planes, 4*growth_rate, kernel_size=1, bias=False)
         self.bn2 = nn.BatchNorm2d(4*growth_rate)
         self.conv2 = nn.Conv2d(4*growth_rate, growth_rate, kernel_size=3, padding=1, bias=False)
+        self.se = SPPSELayer(growth_rate)
 
     def forward(self, x):
         out = self.conv1(F.relu(self.bn1(x)))
         out = self.conv2(F.relu(self.bn2(out)))
+        out = self.se(out)
         out = torch.cat([out,x], 1)
         return out
 
@@ -96,11 +120,11 @@ def DenseNet201():
 def DenseNet161():
     return DenseNet(Bottleneck, [6,12,36,24], growth_rate=48)
 
-def dense(num_classes=100):
+def sppse_dense(num_classes=100):
     return DenseNet(Bottleneck, [6,12,24,16], growth_rate=12,num_classes=num_classes)
 
 def test():
-    net = dense(num_classes=10)
+    net = sppse_dense(num_classes=10)
     x = torch.randn(1,3,32,32)
     y = net(x)
     print(y.shape)

@@ -5,7 +5,31 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
-__all__=['dense']
+__all__=['psppse_dense']
+class PSPPSELayer(nn.Module):
+    def __init__(self,in_cahnnel, channel, reduction=16):
+        super(PSPPSELayer, self).__init__()
+        self.avg_pool1 = nn.AdaptiveAvgPool2d(1)
+        self.avg_pool2 = nn.AdaptiveAvgPool2d(2)
+        self.avg_pool4 = nn.AdaptiveAvgPool2d(4)
+        self.fc = nn.Sequential(
+            nn.Linear(in_cahnnel*21, in_cahnnel*21 // reduction, bias=False),
+            nn.ReLU(inplace=True),
+            nn.Linear(in_cahnnel*21 // reduction, channel, bias=False),
+            nn.Sigmoid()
+        )
+
+    def forward(self, x):
+        b, c, _, _ = x.size()
+        y1 = self.avg_pool1(x).view(b, c)  # like resize() in numpy
+        y2 = self.avg_pool2(x).view(b, 4 * c)
+        y3 = self.avg_pool4(x).view(b, 16 * c)
+        y = torch.cat((y1, y2, y3), 1)
+        y = self.fc(y)
+        b, out_channel = y.size()
+        y = y.view(b, out_channel, 1, 1)
+        return y
+
 
 class Bottleneck(nn.Module):
     def __init__(self, in_planes, growth_rate):
@@ -14,10 +38,13 @@ class Bottleneck(nn.Module):
         self.conv1 = nn.Conv2d(in_planes, 4*growth_rate, kernel_size=1, bias=False)
         self.bn2 = nn.BatchNorm2d(4*growth_rate)
         self.conv2 = nn.Conv2d(4*growth_rate, growth_rate, kernel_size=3, padding=1, bias=False)
+        self.se = PSPPSELayer(in_planes,growth_rate)
 
     def forward(self, x):
+        PSE = self.se(x)
         out = self.conv1(F.relu(self.bn1(x)))
         out = self.conv2(F.relu(self.bn2(out)))
+        out = out * PSE.expand_as(out)
         out = torch.cat([out,x], 1)
         return out
 
@@ -96,13 +123,13 @@ def DenseNet201():
 def DenseNet161():
     return DenseNet(Bottleneck, [6,12,36,24], growth_rate=48)
 
-def dense(num_classes=100):
+def psppse_dense(num_classes=100):
     return DenseNet(Bottleneck, [6,12,24,16], growth_rate=12,num_classes=num_classes)
 
 def test():
-    net = dense(num_classes=10)
+    net = psppse_dense(num_classes=10)
     x = torch.randn(1,3,32,32)
     y = net(x)
     print(y.shape)
 
-# test()
+test()
