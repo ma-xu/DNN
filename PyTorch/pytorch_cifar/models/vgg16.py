@@ -3,7 +3,7 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 import math
-from torchsummary import summary
+# from torchsummary import summary
 
 __all__=['VGG16']
 class VGGBlock(nn.Module):
@@ -74,7 +74,7 @@ def test():
     x = torch.randn(2,3,32,32)
     y = net(x)
     print(y.size())
-    summary(net, input_size=(3, 32, 32))
+    # summary(net, input_size=(3, 32, 32))
 
 # test()
 
