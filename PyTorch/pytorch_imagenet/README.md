@@ -28,7 +28,7 @@ Model | Parameters| Flops | Downsampled ImageNet (Top1) | Downsampled ImageNet (
 [PSPPSEResNet101](https://drive.google.com/open?id=14_JMSE0Wq8etwOTtqF72-L1S3R1G8XJZ) |- |- |62.808%|84.382%
 [CPSPPSEResNet18](https://drive.google.com/open?id=1z1mgRmTWLb1NZ6ojWd_gvO_kwoWsro1-) |- |- |54.644%|78.430%
 [CPSPPSEResNet50](https://drive.google.com/open?id=1beaQwpv5UwGPK8VO22eKUVVsWx5Dlcd6) |- |- |61.476%|83.502%
-[CPSPPSEResNet101]() |- |- |-|-
+[CPSPPSEResNet101](https://drive.google.com/open?id=1HYbudyRzLhwX6VKT3ypkyMVACXXG2aZN) |- |- |61.020%|83.184%
 
 
 For a better understanding, we reschedule the table as follows (the performance is Top1 accuracy):
@@ -41,5 +41,5 @@ PSEResNet       |53.754%|59.316%|60.922%
 CPSEResNet      |53.668%|59.132%|60.826%
 SPPSEResNet     |54.502%|61.304%|62.672%
 PSPPSEResNet    |54.236%|61.364%|62.808%
-CPSPPSEResNet   |54.644%|61.476%|-
+CPSPPSEResNet   |54.644%|61.476%|61.020%
 
