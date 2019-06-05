@@ -7,7 +7,38 @@ import torch.nn as nn
 import torch.nn.functional as F
 
 
-__all__=['ResNeXt29']
+__all__=['CPSPPSEResNeXt29']
+
+class CPSPPSELayer(nn.Module):
+    def __init__(self,in_channel, channel, reduction=16):
+        super(CPSPPSELayer, self).__init__()
+        if in_channel != channel:
+            self.conv1 = nn.Sequential(
+                nn.Conv2d(in_channel, channel, kernel_size=1, stride=1, bias=False),
+                nn.BatchNorm2d(channel),
+                nn.ReLU(inplace=True)
+            )
+        self.avg_pool1 = nn.AdaptiveAvgPool2d(1)
+        self.avg_pool2 = nn.AdaptiveAvgPool2d(2)
+        self.avg_pool4 = nn.AdaptiveAvgPool2d(4)
+        self.fc = nn.Sequential(
+            nn.Linear(channel*21, channel // reduction, bias=False),
+            nn.ReLU(inplace=True),
+            nn.Linear(channel // reduction, channel, bias=False),
+            nn.Sigmoid()
+        )
+
+    def forward(self, x):
+        x = self.conv1(x) if hasattr(self, 'conv1') else x
+        b, c, _, _ = x.size() # b: number; c: channel;
+        y1 = self.avg_pool1(x).view(b, c)  # like resize() in numpy
+        y2 = self.avg_pool2(x).view(b, 4 * c)
+        y3 = self.avg_pool4(x).view(b, 16 * c)
+        y = torch.cat((y1, y2, y3), 1)
+        y = self.fc(y)
+        b,out_channel = y.size()
+        y = y.view(b, out_channel, 1, 1)
+        return y
 
 class Block(nn.Module):
     '''Grouped convolution block.'''
@@ -22,6 +53,7 @@ class Block(nn.Module):
         self.bn2 = nn.BatchNorm2d(group_width)
         self.conv3 = nn.Conv2d(group_width, self.expansion*group_width, kernel_size=1, bias=False)
         self.bn3 = nn.BatchNorm2d(self.expansion*group_width)
+        self.se = CPSPPSELayer(in_planes,self.expansion*group_width)
 
         self.shortcut = nn.Sequential()
         if stride != 1 or in_planes != self.expansion*group_width:
@@ -31,9 +63,11 @@ class Block(nn.Module):
             )
 
     def forward(self, x):
+        CPSPPSE = self.se(x)
         out = F.relu(self.bn1(self.conv1(x)))
         out = F.relu(self.bn2(self.conv2(out)))
         out = self.bn3(self.conv3(out))
+        out = out * CPSPPSE.expand_as(out)
         out += self.shortcut(x)
         out = F.relu(out)
         return out
@@ -88,11 +122,12 @@ def ResNeXt29_8x64d(num_classes=100):
 def ResNeXt29_32x4d(num_classes=100):
     return ResNeXt(num_blocks=[3,3,3], cardinality=32, bottleneck_width=4,num_classes=num_classes)
 """
-def ResNeXt29(num_classes=1000):
+
+def CPSPPSEResNeXt29(num_classes=1000):
     return ResNeXt(num_blocks=[3,3,3], cardinality=2, bottleneck_width=64,num_classes=num_classes)
 
 def test_resnext():
-    net = ResNeXt29()
+    net = CPSPPSEResNeXt29()
     x = torch.randn(1,3,32,32)
     y = net(x)
     print(y.size())
