@@ -19,6 +19,7 @@ from .cpse_resnet import *
 from .spp_se_resnet import *
 from .p_spp_se_resnet import *
 from .cp_spp_se_resnet import *
+from .na_resnet import *
 ########################################
 
 from .vgg16 import *
